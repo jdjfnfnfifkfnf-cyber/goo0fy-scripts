@@ -5,17 +5,21 @@ local UserInputService = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 local mouse = player:GetMouse()
 
+
 local function createTool(character)
 
 	local humanoid = character:WaitForChild("Humanoid")
 	local root = character:WaitForChild("HumanoidRootPart")
 
-	-- Remove old GUI if it exists
+
+	-- Remove old GUI
 	local oldGui = player.PlayerGui:FindFirstChild("GoofyScripts")
 	if oldGui then
 		oldGui:Destroy()
 	end
 
+
+	-- Main GUI
 	local gui = Instance.new("ScreenGui")
 	gui.Name = "GoofyScripts"
 	gui.ResetOnSpawn = false
@@ -23,36 +27,42 @@ local function createTool(character)
 
 
 	local frame = Instance.new("Frame")
-	frame.Size = UDim2.new(0,320,0,330)
-	frame.Position = UDim2.new(0.5,-160,0.5,-165)
+	frame.Size = UDim2.new(0,420,0,450)
+	frame.Position = UDim2.new(0.5,-210,0.5,-225)
 	frame.BackgroundColor3 = Color3.fromRGB(25,25,30)
 	frame.BorderSizePixel = 0
 	frame.Parent = gui
+
 
 	local corner = Instance.new("UICorner")
 	corner.CornerRadius = UDim.new(0,15)
 	corner.Parent = frame
 
+
 	local stroke = Instance.new("UIStroke")
 	stroke.Color = Color3.fromRGB(140,0,255)
-	stroke.Thickness = 2
+	stroke.Thickness = 3
 	stroke.Parent = frame
 
 
+
+	-- Title
 	local title = Instance.new("TextLabel")
-	title.Size = UDim2.new(1,-80,0,40)
+	title.Size = UDim2.new(1,-90,0,45)
+	title.Position = UDim2.new(0,10,0,0)
 	title.BackgroundTransparency = 1
 	title.Text = "🤪 Goofy Scripts"
 	title.TextColor3 = Color3.new(1,1,1)
 	title.Font = Enum.Font.GothamBold
-	title.TextSize = 20
+	title.TextSize = 24
 	title.Parent = frame
 
 
-	-- Close button
+
+	-- Close Button
 	local close = Instance.new("TextButton")
-	close.Size = UDim2.new(0,30,0,30)
-	close.Position = UDim2.new(1,-35,0,5)
+	close.Size = UDim2.new(0,35,0,35)
+	close.Position = UDim2.new(1,-40,0,5)
 	close.Text = "X"
 	close.BackgroundColor3 = Color3.fromRGB(220,60,60)
 	close.TextColor3 = Color3.new(1,1,1)
@@ -60,15 +70,17 @@ local function createTool(character)
 
 	Instance.new("UICorner",close).CornerRadius = UDim.new(1,0)
 
+
 	close.MouseButton1Click:Connect(function()
 		gui:Destroy()
 	end)
 
 
-	-- Minimize button
+
+	-- Minimize Button
 	local minimize = Instance.new("TextButton")
-	minimize.Size = UDim2.new(0,30,0,30)
-	minimize.Position = UDim2.new(1,-70,0,5)
+	minimize.Size = UDim2.new(0,35,0,35)
+	minimize.Position = UDim2.new(1,-80,0,5)
 	minimize.Text = "-"
 	minimize.BackgroundColor3 = Color3.fromRGB(80,80,80)
 	minimize.TextColor3 = Color3.new(1,1,1)
@@ -76,70 +88,156 @@ local function createTool(character)
 
 	Instance.new("UICorner",minimize).CornerRadius = UDim.new(1,0)
 
+
 	local minimized = false
 	local fullSize = frame.Size
 
+
 	minimize.MouseButton1Click:Connect(function()
+
 		minimized = not minimized
 
 		if minimized then
-			frame.Size = UDim2.new(0,320,0,45)
+			frame.Size = UDim2.new(0,420,0,50)
 			minimize.Text = "+"
 		else
 			frame.Size = fullSize
 			minimize.Text = "-"
 		end
+
 	end)
 
 
-	-- WalkSpeed
+
+	-- Tabs
+	local scriptTab = Instance.new("TextButton")
+	scriptTab.Size = UDim2.new(.5,0,0,40)
+	scriptTab.Position = UDim2.new(0,0,0,50)
+	scriptTab.Text = "Scripts"
+	scriptTab.BackgroundColor3 = Color3.fromRGB(0,170,255)
+	scriptTab.TextColor3 = Color3.new(1,1,1)
+	scriptTab.Parent = frame
+
+
+	local controlTab = Instance.new("TextButton")
+	controlTab.Size = UDim2.new(.5,0,0,40)
+	controlTab.Position = UDim2.new(.5,0,0,50)
+	controlTab.Text = "Controls"
+	controlTab.BackgroundColor3 = Color3.fromRGB(80,80,80)
+	controlTab.TextColor3 = Color3.new(1,1,1)
+	controlTab.Parent = frame
+
+
+
+	-- Sections
+	local scriptSection = Instance.new("Frame")
+	scriptSection.Size = UDim2.new(1,-20,1,-110)
+	scriptSection.Position = UDim2.new(0,10,0,100)
+	scriptSection.BackgroundTransparency = 1
+	scriptSection.Parent = frame
+
+
+	local controlSection = Instance.new("Frame")
+	controlSection.Size = UDim2.new(1,-20,1,-110)
+	controlSection.Position = UDim2.new(0,10,0,100)
+	controlSection.BackgroundTransparency = 1
+	controlSection.Visible = false
+	controlSection.Parent = frame
+
+
+
+	-- Tab switching
+	scriptTab.MouseButton1Click:Connect(function()
+		scriptSection.Visible = true
+		controlSection.Visible = false
+	end)
+
+
+	controlTab.MouseButton1Click:Connect(function()
+		scriptSection.Visible = false
+		controlSection.Visible = true
+	end)
+	-- WalkSpeed Variables
+	local speedEnabled = false
+	local normalSpeed = 16
+
+
+	-- WalkSpeed Input
 	local walkBox = Instance.new("TextBox")
-	walkBox.Size = UDim2.new(.7,0,0,35)
-	walkBox.Position = UDim2.new(.15,0,0,55)
-	walkBox.Text = "16"
-	walkBox.PlaceholderText = "WalkSpeed"
+	walkBox.Size = UDim2.new(.75,0,0,40)
+	walkBox.Position = UDim2.new(.125,0,0,20)
+	walkBox.Text = "50"
+	walkBox.PlaceholderText = "Speed Amount"
 	walkBox.BackgroundColor3 = Color3.fromRGB(60,60,65)
 	walkBox.TextColor3 = Color3.new(1,1,1)
-	walkBox.Parent = frame
+	walkBox.Parent = scriptSection
 
 	Instance.new("UICorner",walkBox).CornerRadius = UDim.new(0,8)
 
 
-	local walkButton = Instance.new("TextButton")
-	walkButton.Size = UDim2.new(.7,0,0,30)
-	walkButton.Position = UDim2.new(.15,0,0,95)
-	walkButton.Text = "Apply WalkSpeed"
-	walkButton.BackgroundColor3 = Color3.fromRGB(0,170,255)
-	walkButton.TextColor3 = Color3.new(1,1,1)
-	walkButton.Parent = frame
 
-	Instance.new("UICorner",walkButton).CornerRadius = UDim.new(0,8)
+	-- Speed Button
+	local speedButton = Instance.new("TextButton")
+	speedButton.Size = UDim2.new(.75,0,0,40)
+	speedButton.Position = UDim2.new(.125,0,0,70)
+	speedButton.Text = "⚡ Speed: OFF (R)"
+	speedButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
+	speedButton.TextColor3 = Color3.new(1,1,1)
+	speedButton.Parent = scriptSection
+
+	Instance.new("UICorner",speedButton).CornerRadius = UDim.new(0,8)
 
 
-	walkButton.MouseButton1Click:Connect(function()
-		local value = tonumber(walkBox.Text)
 
-		if value then
-			humanoid.WalkSpeed = value
+	local function toggleSpeed()
+
+		speedEnabled = not speedEnabled
+
+		if speedEnabled then
+
+			humanoid.WalkSpeed = tonumber(walkBox.Text) or 50
+
+			speedButton.Text = "⚡ Speed: ON (R)"
+			speedButton.BackgroundColor3 = Color3.fromRGB(0,170,90)
+
+		else
+
+			humanoid.WalkSpeed = normalSpeed
+
+			speedButton.Text = "⚡ Speed: OFF (R)"
+			speedButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
+
 		end
-	end)
+
+	end
+
+
+
+	speedButton.MouseButton1Click:Connect(toggleSpeed)
+
+
+
 	-- Teleport Button
 	local teleport = Instance.new("TextButton")
-	teleport.Size = UDim2.new(.7,0,0,35)
-	teleport.Position = UDim2.new(.15,0,0,140)
+	teleport.Size = UDim2.new(.75,0,0,40)
+	teleport.Position = UDim2.new(.125,0,0,125)
 	teleport.Text = "📍 Teleport To Cursor (Q)"
 	teleport.BackgroundColor3 = Color3.fromRGB(255,170,0)
 	teleport.TextColor3 = Color3.new(1,1,1)
-	teleport.Parent = frame
+	teleport.Parent = scriptSection
 
 	Instance.new("UICorner",teleport).CornerRadius = UDim.new(0,8)
 
 
+
 	local function teleportToCursor()
+
 		root.CFrame = CFrame.new(
 			mouse.Hit.Position + Vector3.new(0,3,0)
 		)
+
 	end
+
 
 
 	teleport.MouseButton1Click:Connect(function()
@@ -147,53 +245,10 @@ local function createTool(character)
 	end)
 
 
-	UserInputService.InputBegan:Connect(function(input, gameProcessed)
-		if gameProcessed then return end
 
-		if input.KeyCode == Enum.KeyCode.Q then
-			teleportToCursor()
-		end
-	end)
-
-
-	-- Drag GUI
-	local dragging = false
-	local dragStart
-	local startPos
-
-	title.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-			dragging = true
-			dragStart = input.Position
-			startPos = frame.Position
-		end
-	end)
-
-	UserInputService.InputEnded:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-			dragging = false
-		end
-	end)
-
-	UserInputService.InputChanged:Connect(function(input)
-		if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-			local delta = input.Position - dragStart
-
-			frame.Position = UDim2.new(
-				startPos.X.Scale,
-				startPos.X.Offset + delta.X,
-				startPos.Y.Scale,
-				startPos.Y.Offset + delta.Y
-			)
-		end
-	end)
-
-
-	-- Fly variables
+	-- Fly Variables
 	local flying = false
 	local flySpeed = 50
-	local minSpeed = 10
-	local maxSpeed = 200
 
 	local bodyVelocity
 	local bodyGyro
@@ -201,91 +256,22 @@ local function createTool(character)
 	local keys = {}
 
 
+
 	-- Fly Button
 	local flyButton = Instance.new("TextButton")
-	flyButton.Size = UDim2.new(.7,0,0,35)
-	flyButton.Position = UDim2.new(.15,0,0,185)
-	flyButton.Text = "✈ Fly: OFF"
+	flyButton.Size = UDim2.new(.75,0,0,40)
+	flyButton.Position = UDim2.new(.125,0,0,180)
+	flyButton.Text = "✈ Fly: OFF (F)"
 	flyButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
 	flyButton.TextColor3 = Color3.new(1,1,1)
-	flyButton.Parent = frame
+	flyButton.Parent = scriptSection
 
 	Instance.new("UICorner",flyButton).CornerRadius = UDim.new(0,8)
+	-- Fly Toggle Function
+	local function toggleFly()
 
-
-	-- Fly speed label
-	local speedLabel = Instance.new("TextLabel")
-	speedLabel.Size = UDim2.new(1,0,0,25)
-	speedLabel.Position = UDim2.new(0,0,0,225)
-	speedLabel.BackgroundTransparency = 1
-	speedLabel.Text = "Fly Speed: "..flySpeed
-	speedLabel.TextColor3 = Color3.new(1,1,1)
-	speedLabel.Parent = frame
-
-
-	-- Fly speed slider
-	local slider = Instance.new("Frame")
-	slider.Size = UDim2.new(.7,0,0,10)
-	slider.Position = UDim2.new(.15,0,0,260)
-	slider.BackgroundColor3 = Color3.fromRGB(70,70,70)
-	slider.Parent = frame
-
-	Instance.new("UICorner",slider).CornerRadius = UDim.new(1,0)
-
-
-	local fill = Instance.new("Frame")
-	fill.Size = UDim2.new(.2,0,1,0)
-	fill.BackgroundColor3 = Color3.fromRGB(0,170,255)
-	fill.Parent = slider
-
-	Instance.new("UICorner",fill).CornerRadius = UDim.new(1,0)
-	local sliderDragging = false
-
-
-	local function updateSlider(x)
-		local percent = math.clamp(
-			(x - slider.AbsolutePosition.X) /
-			slider.AbsoluteSize.X,
-			0,
-			1
-		)
-
-		fill.Size = UDim2.new(percent,0,1,0)
-
-		flySpeed = math.floor(
-			minSpeed +
-			(maxSpeed-minSpeed)*percent
-		)
-
-		speedLabel.Text = "Fly Speed: "..flySpeed
-	end
-
-
-	slider.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-			sliderDragging = true
-			updateSlider(input.Position.X)
-		end
-	end)
-
-
-	UserInputService.InputChanged:Connect(function(input)
-		if sliderDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-			updateSlider(input.Position.X)
-		end
-	end)
-
-
-	UserInputService.InputEnded:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-			sliderDragging = false
-		end
-	end)
-
-
-	-- Fly toggle
-	flyButton.MouseButton1Click:Connect(function()
 		flying = not flying
+
 
 		if flying then
 
@@ -310,43 +296,85 @@ local function createTool(character)
 
 			humanoid.PlatformStand = true
 
-			flyButton.Text = "✈ Fly: ON"
+
+			flyButton.Text = "✈ Fly: ON (F)"
 			flyButton.BackgroundColor3 = Color3.fromRGB(0,170,90)
+
 
 		else
 
 			if bodyVelocity then
 				bodyVelocity:Destroy()
+				bodyVelocity = nil
 			end
+
 
 			if bodyGyro then
 				bodyGyro:Destroy()
+				bodyGyro = nil
 			end
+
 
 			humanoid.PlatformStand = false
 
-			flyButton.Text = "✈ Fly: OFF"
+
+			flyButton.Text = "✈ Fly: OFF (F)"
 			flyButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
 
 		end
+
+	end
+
+
+
+	flyButton.MouseButton1Click:Connect(toggleFly)
+
+
+
+	-- Keybinds
+	UserInputService.InputBegan:Connect(function(input, gameProcessed)
+
+		if gameProcessed then return end
+
+
+		if input.KeyCode == Enum.KeyCode.F then
+			toggleFly()
+		end
+
+
+		if input.KeyCode == Enum.KeyCode.R then
+			toggleSpeed()
+		end
+
+
+		if input.KeyCode == Enum.KeyCode.Q then
+			teleportToCursor()
+		end
+
 	end)
 
 
-	-- Keyboard controls
+
+	-- Movement Keys
 	UserInputService.InputBegan:Connect(function(input)
+
 		keys[input.KeyCode] = true
+
 	end)
 
 
 	UserInputService.InputEnded:Connect(function(input)
+
 		keys[input.KeyCode] = false
+
 	end)
 
 
-	-- Flying movement
+
+	-- Fly Movement
 	RunService.RenderStepped:Connect(function()
 
-		if flying then
+		if flying and bodyVelocity and bodyGyro then
 
 			local camera = workspace.CurrentCamera
 			local move = Vector3.zero
@@ -356,21 +384,26 @@ local function createTool(character)
 				move += camera.CFrame.LookVector
 			end
 
+
 			if keys[Enum.KeyCode.S] then
 				move -= camera.CFrame.LookVector
 			end
+
 
 			if keys[Enum.KeyCode.A] then
 				move -= camera.CFrame.RightVector
 			end
 
+
 			if keys[Enum.KeyCode.D] then
 				move += camera.CFrame.RightVector
 			end
 
+
 			if keys[Enum.KeyCode.Space] then
 				move += Vector3.new(0,1,0)
 			end
+
 
 			if keys[Enum.KeyCode.LeftControl] then
 				move -= Vector3.new(0,1,0)
@@ -386,26 +419,97 @@ local function createTool(character)
 			bodyGyro.CFrame = camera.CFrame
 
 		end
+
 	end)
 
 
-	-- Controls display
+
+	-- Controls Section
 	local controls = Instance.new("TextLabel")
-	controls.Size = UDim2.new(1,0,0,40)
-	controls.Position = UDim2.new(0,0,0,280)
+	controls.Size = UDim2.new(1,0,0,250)
+	controls.Position = UDim2.new(0,0,0,20)
 	controls.BackgroundTransparency = 1
-	controls.Text = "WASD = Move | Space = Up | CTRL = Down | Q = Teleport"
-	controls.TextColor3 = Color3.fromRGB(180,180,180)
-	controls.TextSize = 13
-	controls.Parent = frame
+	controls.Text =
+		"⌨ KEYBINDS\n\n" ..
+		"F = Toggle Fly\n\n" ..
+		"R = Toggle Speed\n\n" ..
+		"Q = Teleport To Cursor\n\n" ..
+		"WASD = Fly Movement\n\n" ..
+		"SPACE = Fly Up\n\n" ..
+		"CTRL = Fly Down"
+
+	controls.TextColor3 = Color3.new(1,1,1)
+	controls.Font = Enum.Font.GothamBold
+	controls.TextSize = 20
+	controls.Parent = controlSection
+	-- Drag GUI
+	local dragging = false
+	local dragStart
+	local startPos
+
+
+	title.InputBegan:Connect(function(input)
+
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+			dragging = true
+			dragStart = input.Position
+			startPos = frame.Position
+
+		end
+
+	end)
+
+
+
+	UserInputService.InputEnded:Connect(function(input)
+
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+			dragging = false
+
+		end
+
+	end)
+
+
+
+	UserInputService.InputChanged:Connect(function(input)
+
+		if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+
+			local delta = input.Position - dragStart
+
+
+			frame.Position = UDim2.new(
+
+				startPos.X.Scale,
+				startPos.X.Offset + delta.X,
+
+				startPos.Y.Scale,
+				startPos.Y.Offset + delta.Y
+
+			)
+
+		end
+
+	end)
+
 
 end
 
 
+
+-- Load GUI
 createTool(player.Character or player.CharacterAdded:Wait())
 
 
+
+-- Reload after respawn
 player.CharacterAdded:Connect(function(character)
+
 	task.wait(1)
+
 	createTool(character)
+
 end)
