@@ -87,34 +87,7 @@ local function createTool(character)
 	local minimized = false
 
 
-	minimize.MouseButton1Click:Connect(function()
-
-	minimized = not minimized
-
-	if minimized then
-
-		frame.Size = UDim2.new(0,450,0,50)
-		minimize.Text = "+"
-
-		-- Hide everything except title and buttons
-		scriptSection.Visible = false
-		controlSection.Visible = false
-		scriptTab.Visible = false
-		controlTab.Visible = false
-
-	else
-
-		frame.Size = fullSize
-		minimize.Text = "-"
-
-		-- Show GUI contents again
-		scriptTab.Visible = true
-		controlTab.Visible = true
-		scriptSection.Visible = true
-
-	end
-
-end)
+	
 	-- Tabs
 
 	local scriptTab = Instance.new("TextButton")
@@ -140,7 +113,50 @@ end)
 	scriptSection.Position = UDim2.new(0,10,0,100)
 	scriptSection.BackgroundTransparency = 1
 	scriptSection.Parent = frame
+minimize.MouseButton1Click:Connect(function()
 
+	minimized = not minimized
+
+	if minimized then
+
+		frame.Size = UDim2.new(0,450,0,50)
+		minimize.Text = "+"
+
+
+		for _, item in pairs(frame:GetChildren()) do
+
+			if item ~= title 
+			and item ~= close 
+			and item ~= minimize 
+			and not item:IsA("UICorner") 
+			and not item:IsA("UIStroke") then
+
+				item.Visible = false
+
+			end
+
+		end
+
+
+	else
+
+		frame.Size = fullSize
+		minimize.Text = "-"
+
+
+		for _, item in pairs(frame:GetChildren()) do
+
+			if item:IsA("GuiObject") then
+
+				item.Visible = true
+
+			end
+
+		end
+
+	end
+
+end)
 
 	local controlSection = Instance.new("Frame")
 	controlSection.Size = UDim2.new(1,-20,1,-110)
