@@ -168,7 +168,7 @@ local function createTool(character)
 				startPos.Y.Offset + delta.Y
 			)
 		end
-	end)
+	end) 
 	-- Fly variables
 	local flying = false
 	local flySpeed = 50
