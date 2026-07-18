@@ -113,6 +113,16 @@ local function createTool(character)
 	scriptSection.Position = UDim2.new(0,10,0,100)
 	scriptSection.BackgroundTransparency = 1
 	scriptSection.Parent = frame
+
+
+	local controlSection = Instance.new("Frame")
+	controlSection.Size = UDim2.new(1,-20,1,-110)
+	controlSection.Position = UDim2.new(0,10,0,100)
+	controlSection.BackgroundTransparency = 1
+	controlSection.Visible = false
+	controlSection.Parent = frame
+
+
 minimize.MouseButton1Click:Connect(function()
 
 	minimized = not minimized
@@ -146,25 +156,19 @@ minimize.MouseButton1Click:Connect(function()
 
 		for _, item in pairs(frame:GetChildren()) do
 
-			if item:IsA("GuiObject") then
+	if item:IsA("GuiObject") then
+		item.Visible = true
+	end
 
-				item.Visible = true
+end
 
-			end
-
-		end
+-- Fix tab overlap after opening menu
+scriptSection.Visible = true
+controlSection.Visible = false
 
 	end
 
 end)
-
-	local controlSection = Instance.new("Frame")
-	controlSection.Size = UDim2.new(1,-20,1,-110)
-	controlSection.Position = UDim2.new(0,10,0,100)
-	controlSection.BackgroundTransparency = 1
-	controlSection.Visible = false
-	controlSection.Parent = frame
-
 
 	scriptTab.MouseButton1Click:Connect(function()
 		scriptSection.Visible = true
