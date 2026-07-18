@@ -628,21 +628,143 @@ end)
 end
 
 
+-- KEY SYSTEM
 
--- Load GUI
+local function createKeyGui()
 
-if player.Character then
+	local keyGui = Instance.new("ScreenGui")
+	keyGui.Name = "HyperMintKeySystem"
+	keyGui.ResetOnSpawn = false
+	keyGui.Parent = PlayerGui
 
-	createTool(player.Character)
+
+	local keyFrame = Instance.new("Frame")
+	keyFrame.Size = UDim2.new(0,350,0,250)
+	keyFrame.Position = UDim2.new(.5,-175,.5,-125)
+	keyFrame.BackgroundColor3 = Color3.fromRGB(25,25,30)
+	keyFrame.Parent = keyGui
+
+	local corner = Instance.new("UICorner")
+	corner.CornerRadius = UDim.new(0,15)
+	corner.Parent = keyFrame
+
+
+	-- Purple outline around the box
+	local outline = Instance.new("UIStroke")
+	outline.Color = Color3.fromRGB(170,0,255)
+	outline.Thickness = 3
+	outline.Parent = keyFrame
+
+
+	local creator = Instance.new("TextLabel")
+	creator.Size = UDim2.new(1,0,0,40)
+	creator.Position = UDim2.new(0,0,0,15)
+	creator.BackgroundTransparency = 1
+	creator.Text = "Created by HyperMint"
+	creator.TextColor3 = Color3.new(1,1,1)
+	creator.Font = Enum.Font.GothamBold
+	creator.TextSize = 22
+	creator.Parent = keyFrame
+
+
+	local text = Instance.new("TextLabel")
+	text.Size = UDim2.new(1,0,0,30)
+	text.Position = UDim2.new(0,0,0,60)
+	text.BackgroundTransparency = 1
+	text.Text = "Type key here"
+	text.TextColor3 = Color3.fromRGB(220,220,220)
+	text.Font = Enum.Font.Gotham
+	text.TextSize = 18
+	text.Parent = keyFrame
+
+
+	local keyBox = Instance.new("TextBox")
+	keyBox.Size = UDim2.new(.75,0,0,40)
+	keyBox.Position = UDim2.new(.125,0,0,100)
+	keyBox.PlaceholderText = "Key"
+	keyBox.Text = ""
+	keyBox.BackgroundColor3 = Color3.fromRGB(50,50,55)
+	keyBox.TextColor3 = Color3.new(1,1,1)
+	keyBox.Font = Enum.Font.Gotham
+	keyBox.TextSize = 18
+	keyBox.Parent = keyFrame
+
+
+	local boxCorner = Instance.new("UICorner")
+	boxCorner.CornerRadius = UDim.new(0,8)
+	boxCorner.Parent = keyBox
+
+
+	-- Purple outline ONLY around input box
+	local boxStroke = Instance.new("UIStroke")
+	boxStroke.Color = Color3.fromRGB(170,0,255)
+	boxStroke.Thickness = 3
+	boxStroke.Parent = keyBox
+
+
+	local submit = Instance.new("TextButton")
+	submit.Size = UDim2.new(.75,0,0,40)
+	submit.Position = UDim2.new(.125,0,0,155)
+	submit.Text = "Enter Key"
+	submit.BackgroundColor3 = Color3.fromRGB(60,60,65)
+	submit.TextColor3 = Color3.new(1,1,1)
+	submit.Font = Enum.Font.GothamBold
+	submit.TextSize = 18
+	submit.Parent = keyFrame
+
+
+	local submitCorner = Instance.new("UICorner")
+	submitCorner.CornerRadius = UDim.new(0,8)
+	submitCorner.Parent = submit
+
+
+	local discord = Instance.new("TextButton")
+	discord.Size = UDim2.new(.75,0,0,30)
+	discord.Position = UDim2.new(.125,0,0,205)
+	discord.Text = "Join Discord for Key"
+	discord.BackgroundTransparency = 1
+	discord.TextColor3 = Color3.fromRGB(170,0,255)
+	discord.Parent = keyFrame
+
+
+	discord.MouseButton1Click:Connect(function()
+		if setclipboard then
+			setclipboard("https://discord.gg/RUTDYKTxNy")
+		end
+	end)
+
+
+	submit.MouseButton1Click:Connect(function()
+
+		if keyBox.Text == "6767" then
+
+			keyGui:Destroy()
+
+			if player.Character then
+				createTool(player.Character)
+			end
+
+		else
+
+			keyBox.Text = ""
+			keyBox.PlaceholderText = "Wrong Key"
+
+		end
+
+	end)
 
 end
 
+
+
+-- Start Key System
+
+createKeyGui()
 
 
 player.CharacterAdded:Connect(function(character)
 
 	task.wait(1)
 
-	createTool(character)
-
 end)
+
