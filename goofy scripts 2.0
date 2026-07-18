@@ -226,7 +226,7 @@ end)
 
 		if speedEnabled then
 			humanoid.WalkSpeed = tonumber(walkBox.Text) or 50
-			speedButton.Text = "⚡ Speed ON (Z)"
+			speedButton.Text = "⚡ Speed ON (T)"
 			speedButton.BackgroundColor3 = Color3.fromRGB(0,170,90)
 		else
 			humanoid.WalkSpeed = normalSpeed
