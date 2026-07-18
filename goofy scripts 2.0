@@ -89,17 +89,32 @@ local function createTool(character)
 
 	minimize.MouseButton1Click:Connect(function()
 
-		minimized = not minimized
+	minimized = not minimized
 
-		if minimized then
-			frame.Size = UDim2.new(0,450,0,50)
-			minimize.Text = "+"
-		else
-			frame.Size = fullSize
-			minimize.Text = "-"
-		end
+	if minimized then
 
-	end)
+		frame.Size = UDim2.new(0,450,0,50)
+		minimize.Text = "+"
+
+		-- Hide everything except title and buttons
+		scriptSection.Visible = false
+		controlSection.Visible = false
+		scriptTab.Visible = false
+		controlTab.Visible = false
+
+	else
+
+		frame.Size = fullSize
+		minimize.Text = "-"
+
+		-- Show GUI contents again
+		scriptTab.Visible = true
+		controlTab.Visible = true
+		scriptSection.Visible = true
+
+	end
+
+end)
 	-- Tabs
 
 	local scriptTab = Instance.new("TextButton")
