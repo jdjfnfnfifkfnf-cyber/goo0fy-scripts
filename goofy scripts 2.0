@@ -49,7 +49,7 @@ local function createTool(character)
 	title.Size = UDim2.new(1,-100,0,45)
 	title.Position = UDim2.new(0,10,0,0)
 	title.BackgroundTransparency = 1
-	title.Text = "🤪 Goofy Scripts"
+	title.Text = "HyperMint Scripts"
 	title.TextColor3 = Color3.new(1,1,1)
 	title.Font = Enum.Font.GothamBold
 	title.TextSize = 24
@@ -105,7 +105,7 @@ local function createTool(character)
 	local scriptTab = Instance.new("TextButton")
 	scriptTab.Size = UDim2.new(.5,0,0,40)
 	scriptTab.Position = UDim2.new(0,0,0,50)
-	scriptTab.Text = "Scripts"
+	scriptTab.Text = "Cheats"
 	scriptTab.BackgroundColor3 = Color3.fromRGB(0,170,255)
 	scriptTab.TextColor3 = Color3.new(1,1,1)
 	scriptTab.Parent = frame
