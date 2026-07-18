@@ -1,0 +1,421 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local mouse = player:GetMouse()
+
+local function createTool(character)
+
+	local humanoid = character:WaitForChild("Humanoid")
+	local root = character:WaitForChild("HumanoidRootPart")
+
+	local gui = Instance.new("ScreenGui")
+	gui.Name = "GoofyScripts"
+	gui.ResetOnSpawn = false
+	gui.Parent = player.PlayerGui
+
+
+	local frame = Instance.new("Frame")
+	frame.Size = UDim2.new(0,320,0,330)
+	frame.Position = UDim2.new(0.5,-160,0.5,-165)
+	frame.BackgroundColor3 = Color3.fromRGB(25,25,30)
+	frame.BorderSizePixel = 0
+	frame.Parent = gui
+
+	local corner = Instance.new("UICorner")
+	corner.CornerRadius = UDim.new(0,15)
+	corner.Parent = frame
+
+	local stroke = Instance.new("UIStroke")
+	stroke.Color = Color3.fromRGB(140,0,255)
+	stroke.Thickness = 2
+	stroke.Parent = frame
+
+
+	local title = Instance.new("TextLabel")
+	title.Size = UDim2.new(1,-80,0,40)
+	title.BackgroundTransparency = 1
+	title.Text = "🤪 Goofy Scripts"
+	title.TextColor3 = Color3.new(1,1,1)
+	title.Font = Enum.Font.GothamBold
+	title.TextSize = 20
+	title.Parent = frame
+
+
+	-- Close button
+	local close = Instance.new("TextButton")
+	close.Size = UDim2.new(0,30,0,30)
+	close.Position = UDim2.new(1,-35,0,5)
+	close.Text = "X"
+	close.BackgroundColor3 = Color3.fromRGB(220,60,60)
+	close.TextColor3 = Color3.new(1,1,1)
+	close.Parent = frame
+
+	Instance.new("UICorner",close).CornerRadius = UDim.new(1,0)
+
+	close.MouseButton1Click:Connect(function()
+		gui:Destroy()
+	end)
+
+
+	-- Minimize button
+	local minimize = Instance.new("TextButton")
+	minimize.Size = UDim2.new(0,30,0,30)
+	minimize.Position = UDim2.new(1,-70,0,5)
+	minimize.Text = "-"
+	minimize.BackgroundColor3 = Color3.fromRGB(80,80,80)
+	minimize.TextColor3 = Color3.new(1,1,1)
+	minimize.Parent = frame
+
+	Instance.new("UICorner",minimize).CornerRadius = UDim.new(1,0)
+
+	local minimized = false
+	local fullSize = frame.Size
+
+	minimize.MouseButton1Click:Connect(function()
+		minimized = not minimized
+
+		if minimized then
+			frame.Size = UDim2.new(0,320,0,45)
+			minimize.Text = "+"
+		else
+			frame.Size = fullSize
+			minimize.Text = "-"
+		end
+	end)
+
+
+	-- WalkSpeed
+	local walkBox = Instance.new("TextBox")
+	walkBox.Size = UDim2.new(.7,0,0,35)
+	walkBox.Position = UDim2.new(.15,0,0,55)
+	walkBox.Text = "16"
+	walkBox.PlaceholderText = "WalkSpeed"
+	walkBox.BackgroundColor3 = Color3.fromRGB(60,60,65)
+	walkBox.TextColor3 = Color3.new(1,1,1)
+	walkBox.Parent = frame
+
+	Instance.new("UICorner",walkBox).CornerRadius = UDim.new(0,8)
+
+
+	local walkButton = Instance.new("TextButton")
+	walkButton.Size = UDim2.new(.7,0,0,30)
+	walkButton.Position = UDim2.new(.15,0,0,95)
+	walkButton.Text = "Apply WalkSpeed"
+	walkButton.BackgroundColor3 = Color3.fromRGB(0,170,255)
+	walkButton.TextColor3 = Color3.new(1,1,1)
+	walkButton.Parent = frame
+
+	Instance.new("UICorner",walkButton).CornerRadius = UDim.new(0,8)
+
+
+	walkButton.MouseButton1Click:Connect(function()
+		local value = tonumber(walkBox.Text)
+
+		if value then
+			humanoid.WalkSpeed = value
+		end
+	end)
+
+
+	-- Teleport Button
+	local teleport = Instance.new("TextButton")
+	teleport.Size = UDim2.new(.7,0,0,35)
+	teleport.Position = UDim2.new(.15,0,0,140)
+	teleport.Text = "📍 Teleport To Cursor"
+	teleport.BackgroundColor3 = Color3.fromRGB(255,170,0)
+	teleport.TextColor3 = Color3.new(1,1,1)
+	teleport.Parent = frame
+
+	Instance.new("UICorner",teleport).CornerRadius = UDim.new(0,8)
+
+
+	teleport.MouseButton1Click:Connect(function()
+		root.CFrame = CFrame.new(
+			mouse.Hit.Position + Vector3.new(0,3,0)
+		)
+	end)
+
+
+	-- Drag GUI
+	local dragging = false
+	local dragStart
+	local startPos
+
+	title.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			dragging = true
+			dragStart = input.Position
+			startPos = frame.Position
+		end
+	end)
+
+	UserInputService.InputEnded:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			dragging = false
+		end
+	end)
+
+	UserInputService.InputChanged:Connect(function(input)
+		if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+			local delta = input.Position - dragStart
+
+			frame.Position = UDim2.new(
+				startPos.X.Scale,
+				startPos.X.Offset + delta.X,
+				startPos.Y.Scale,
+				startPos.Y.Offset + delta.Y
+			)
+		end
+	end) 
+	-- Fly variables
+	local flying = false
+	local flySpeed = 50
+	local minSpeed = 10
+	local maxSpeed = 200
+
+	local bodyVelocity
+	local bodyGyro
+
+	local keys = {}
+
+
+	-- Fly Button
+	local flyButton = Instance.new("TextButton")
+	flyButton.Size = UDim2.new(.7,0,0,35)
+	flyButton.Position = UDim2.new(.15,0,0,185)
+	flyButton.Text = "✈ Fly: OFF"
+	flyButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
+	flyButton.TextColor3 = Color3.new(1,1,1)
+	flyButton.Parent = frame
+
+	Instance.new("UICorner",flyButton).CornerRadius = UDim.new(0,8)
+
+
+	-- Fly speed label
+	local speedLabel = Instance.new("TextLabel")
+	speedLabel.Size = UDim2.new(1,0,0,25)
+	speedLabel.Position = UDim2.new(0,0,0,225)
+	speedLabel.BackgroundTransparency = 1
+	speedLabel.Text = "Fly Speed: "..flySpeed
+	speedLabel.TextColor3 = Color3.new(1,1,1)
+	speedLabel.Parent = frame
+
+
+	-- Fly speed slider
+	local slider = Instance.new("Frame")
+	slider.Size = UDim2.new(.7,0,0,10)
+	slider.Position = UDim2.new(.15,0,0,260)
+	slider.BackgroundColor3 = Color3.fromRGB(70,70,70)
+	slider.Parent = frame
+
+	Instance.new("UICorner",slider).CornerRadius = UDim.new(1,0)
+
+
+	local fill = Instance.new("Frame")
+	fill.Size = UDim2.new(.2,0,1,0)
+	fill.BackgroundColor3 = Color3.fromRGB(0,170,255)
+	fill.Parent = slider
+
+	Instance.new("UICorner",fill).CornerRadius = UDim.new(1,0)
+
+
+	local sliderDragging = false
+
+
+	local function updateSlider(x)
+
+		local percent = math.clamp(
+			(x-slider.AbsolutePosition.X) /
+			slider.AbsoluteSize.X,
+			0,
+			1
+		)
+
+		fill.Size = UDim2.new(percent,0,1,0)
+
+		flySpeed = math.floor(
+			minSpeed +
+			(maxSpeed-minSpeed)*percent
+		)
+
+		speedLabel.Text = "Fly Speed: "..flySpeed
+	end
+
+
+	slider.InputBegan:Connect(function(input)
+
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			sliderDragging = true
+			updateSlider(input.Position.X)
+		end
+
+	end)
+
+
+	UserInputService.InputChanged:Connect(function(input)
+
+		if sliderDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+			updateSlider(input.Position.X)
+		end
+
+	end)
+
+
+	UserInputService.InputEnded:Connect(function(input)
+
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			sliderDragging = false
+		end
+
+	end)
+
+
+
+	-- Fly toggle
+	flyButton.MouseButton1Click:Connect(function()
+
+		flying = not flying
+
+
+		if flying then
+
+			bodyVelocity = Instance.new("BodyVelocity")
+			bodyVelocity.MaxForce = Vector3.new(
+				math.huge,
+				math.huge,
+				math.huge
+			)
+			bodyVelocity.Parent = root
+
+
+			bodyGyro = Instance.new("BodyGyro")
+			bodyGyro.MaxTorque = Vector3.new(
+				math.huge,
+				math.huge,
+				math.huge
+			)
+			bodyGyro.P = 10000
+			bodyGyro.Parent = root
+
+
+			humanoid.PlatformStand = true
+
+
+			flyButton.Text = "✈ Fly: ON"
+			flyButton.BackgroundColor3 =
+				Color3.fromRGB(0,170,90)
+
+		else
+
+			if bodyVelocity then
+				bodyVelocity:Destroy()
+			end
+
+			if bodyGyro then
+				bodyGyro:Destroy()
+			end
+
+
+			humanoid.PlatformStand = false
+
+
+			flyButton.Text = "✈ Fly: OFF"
+			flyButton.BackgroundColor3 =
+				Color3.fromRGB(60,60,65)
+
+		end
+
+	end)
+
+
+
+	-- Keyboard controls
+	UserInputService.InputBegan:Connect(function(input)
+
+		keys[input.KeyCode] = true
+
+	end)
+
+
+	UserInputService.InputEnded:Connect(function(input)
+
+		keys[input.KeyCode] = false
+
+	end)
+
+
+
+	-- Flying movement
+	RunService.RenderStepped:Connect(function()
+
+		if flying then
+
+			local camera = workspace.CurrentCamera
+			local move = Vector3.zero
+
+
+			if keys[Enum.KeyCode.W] then
+				move += camera.CFrame.LookVector
+			end
+
+			if keys[Enum.KeyCode.S] then
+				move -= camera.CFrame.LookVector
+			end
+
+			if keys[Enum.KeyCode.A] then
+				move -= camera.CFrame.RightVector
+			end
+
+			if keys[Enum.KeyCode.D] then
+				move += camera.CFrame.RightVector
+			end
+
+			if keys[Enum.KeyCode.Space] then
+				move += Vector3.new(0,1,0)
+			end
+
+			if keys[Enum.KeyCode.LeftControl] then
+				move -= Vector3.new(0,1,0)
+			end
+
+
+			if move.Magnitude > 0 then
+				move = move.Unit
+			end
+
+
+			bodyVelocity.Velocity =
+				move * flySpeed
+
+			bodyGyro.CFrame =
+				camera.CFrame
+
+		end
+
+	end)
+
+
+	-- Controls display
+	local controls = Instance.new("TextLabel")
+	controls.Size = UDim2.new(1,0,0,40)
+	controls.Position = UDim2.new(0,0,0,280)
+	controls.BackgroundTransparency = 1
+	controls.Text =
+		"WASD = Move | Space = Up | CTRL = Down"
+	controls.TextColor3 =
+		Color3.fromRGB(180,180,180)
+	controls.TextSize = 13
+	controls.Parent = frame
+
+end
+
+
+createTool(player.Character or player.CharacterAdded:Wait())
+
+
+player.CharacterAdded:Connect(function(character)
+	task.wait(1)
+	createTool(character)
+end)
