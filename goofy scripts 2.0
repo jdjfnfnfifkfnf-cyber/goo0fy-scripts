@@ -212,7 +212,7 @@ end)
 	local speedButton = Instance.new("TextButton")
 	speedButton.Size = UDim2.new(.75,0,0,40)
 	speedButton.Position = UDim2.new(.125,0,0,70)
-	speedButton.Text = "⚡ Speed OFF (Z)"
+	speedButton.Text = "⚡ Speed OFF (T)"
 	speedButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
 	speedButton.TextColor3 = Color3.new(1,1,1)
 	speedButton.Parent = scriptSection
@@ -230,7 +230,7 @@ end)
 			speedButton.BackgroundColor3 = Color3.fromRGB(0,170,90)
 		else
 			humanoid.WalkSpeed = normalSpeed
-			speedButton.Text = "⚡ Speed OFF (Z)"
+			speedButton.Text = "⚡ Speed OFF (T)"
 			speedButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
 		end
 
@@ -446,7 +446,7 @@ end
 	controls.Text =
 		"⌨ CONTROLS\n\n"..
 		"F = Toggle Fly\n\n"..
-		"Z = Toggle Speed\n\n"..
+		"T = Toggle Speed\n\n"..
 		"Q = Teleport\n\n"..
 		"WASD = Fly Movement\n\n"..
 		"Space = Up\n\n"..
@@ -476,9 +476,9 @@ end
 	end
 
 
-	if input.KeyCode == Enum.KeyCode.Z then
-		toggleSpeed()
-	end
+if input.KeyCode == Enum.KeyCode.T then
+	toggleSpeed()
+end
 
 
 	if input.KeyCode == Enum.KeyCode.Q then
