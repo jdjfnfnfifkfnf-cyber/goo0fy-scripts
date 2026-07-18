@@ -10,6 +10,12 @@ local function createTool(character)
 	local humanoid = character:WaitForChild("Humanoid")
 	local root = character:WaitForChild("HumanoidRootPart")
 
+	-- Remove old GUI if it exists
+	local oldGui = player.PlayerGui:FindFirstChild("GoofyScripts")
+	if oldGui then
+		oldGui:Destroy()
+	end
+
 	local gui = Instance.new("ScreenGui")
 	gui.Name = "GoofyScripts"
 	gui.ResetOnSpawn = false
@@ -117,13 +123,11 @@ local function createTool(character)
 			humanoid.WalkSpeed = value
 		end
 	end)
-
-
 	-- Teleport Button
 	local teleport = Instance.new("TextButton")
 	teleport.Size = UDim2.new(.7,0,0,35)
 	teleport.Position = UDim2.new(.15,0,0,140)
-	teleport.Text = "📍 Teleport To Cursor"
+	teleport.Text = "📍 Teleport To Cursor (Q)"
 	teleport.BackgroundColor3 = Color3.fromRGB(255,170,0)
 	teleport.TextColor3 = Color3.new(1,1,1)
 	teleport.Parent = frame
@@ -131,10 +135,24 @@ local function createTool(character)
 	Instance.new("UICorner",teleport).CornerRadius = UDim.new(0,8)
 
 
-	teleport.MouseButton1Click:Connect(function()
+	local function teleportToCursor()
 		root.CFrame = CFrame.new(
 			mouse.Hit.Position + Vector3.new(0,3,0)
 		)
+	end
+
+
+	teleport.MouseButton1Click:Connect(function()
+		teleportToCursor()
+	end)
+
+
+	UserInputService.InputBegan:Connect(function(input, gameProcessed)
+		if gameProcessed then return end
+
+		if input.KeyCode == Enum.KeyCode.Q then
+			teleportToCursor()
+		end
 	end)
 
 
@@ -168,7 +186,9 @@ local function createTool(character)
 				startPos.Y.Offset + delta.Y
 			)
 		end
-	end) 
+	end)
+
+
 	-- Fly variables
 	local flying = false
 	local flySpeed = 50
@@ -219,15 +239,12 @@ local function createTool(character)
 	fill.Parent = slider
 
 	Instance.new("UICorner",fill).CornerRadius = UDim.new(1,0)
-
-
 	local sliderDragging = false
 
 
 	local function updateSlider(x)
-
 		local percent = math.clamp(
-			(x-slider.AbsolutePosition.X) /
+			(x - slider.AbsolutePosition.X) /
 			slider.AbsoluteSize.X,
 			0,
 			1
@@ -245,39 +262,30 @@ local function createTool(character)
 
 
 	slider.InputBegan:Connect(function(input)
-
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			sliderDragging = true
 			updateSlider(input.Position.X)
 		end
-
 	end)
 
 
 	UserInputService.InputChanged:Connect(function(input)
-
 		if sliderDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
 			updateSlider(input.Position.X)
 		end
-
 	end)
 
 
 	UserInputService.InputEnded:Connect(function(input)
-
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			sliderDragging = false
 		end
-
 	end)
-
 
 
 	-- Fly toggle
 	flyButton.MouseButton1Click:Connect(function()
-
 		flying = not flying
-
 
 		if flying then
 
@@ -302,10 +310,8 @@ local function createTool(character)
 
 			humanoid.PlatformStand = true
 
-
 			flyButton.Text = "✈ Fly: ON"
-			flyButton.BackgroundColor3 =
-				Color3.fromRGB(0,170,90)
+			flyButton.BackgroundColor3 = Color3.fromRGB(0,170,90)
 
 		else
 
@@ -317,34 +323,24 @@ local function createTool(character)
 				bodyGyro:Destroy()
 			end
 
-
 			humanoid.PlatformStand = false
 
-
 			flyButton.Text = "✈ Fly: OFF"
-			flyButton.BackgroundColor3 =
-				Color3.fromRGB(60,60,65)
+			flyButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
 
 		end
-
 	end)
-
 
 
 	-- Keyboard controls
 	UserInputService.InputBegan:Connect(function(input)
-
 		keys[input.KeyCode] = true
-
 	end)
 
 
 	UserInputService.InputEnded:Connect(function(input)
-
 		keys[input.KeyCode] = false
-
 	end)
-
 
 
 	-- Flying movement
@@ -386,14 +382,10 @@ local function createTool(character)
 			end
 
 
-			bodyVelocity.Velocity =
-				move * flySpeed
-
-			bodyGyro.CFrame =
-				camera.CFrame
+			bodyVelocity.Velocity = move * flySpeed
+			bodyGyro.CFrame = camera.CFrame
 
 		end
-
 	end)
 
 
@@ -402,10 +394,8 @@ local function createTool(character)
 	controls.Size = UDim2.new(1,0,0,40)
 	controls.Position = UDim2.new(0,0,0,280)
 	controls.BackgroundTransparency = 1
-	controls.Text =
-		"WASD = Move | Space = Up | CTRL = Down"
-	controls.TextColor3 =
-		Color3.fromRGB(180,180,180)
+	controls.Text = "WASD = Move | Space = Up | CTRL = Down | Q = Teleport"
+	controls.TextColor3 = Color3.fromRGB(180,180,180)
 	controls.TextSize = 13
 	controls.Parent = frame
 
