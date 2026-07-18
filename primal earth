@@ -1,3 +1,106 @@
+-- HyperMint Key Gate
+
+local REQUIRED_KEY = "6767"
+local DISCORD_LINK = "https://discord.gg/RUTDYKTxNy"
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "HyperMintKeySystem"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 350, 0, 250)
+frame.Position = UDim2.new(0.5, -175, 0.5, -125)
+frame.BackgroundColor3 = Color3.fromRGB(35,35,35)
+frame.Parent = gui
+
+local corner = Instance.new("UICorner")
+corner.Parent = frame
+corner.CornerRadius = UDim.new(0,12)
+
+
+local creator = Instance.new("TextLabel")
+creator.Size = UDim2.new(1,0,0,40)
+creator.Position = UDim2.new(0,0,0,20)
+creator.BackgroundTransparency = 1
+creator.Text = "Created by HyperMint"
+creator.TextColor3 = Color3.fromRGB(255,255,255)
+creator.Font = Enum.Font.GothamBold
+creator.TextSize = 22
+creator.Parent = frame
+
+
+local keyBox = Instance.new("TextBox")
+keyBox.Size = UDim2.new(0.75,0,0,45)
+keyBox.Position = UDim2.new(0.125,0,0,80)
+keyBox.PlaceholderText = "Type key here"
+keyBox.Text = ""
+keyBox.TextColor3 = Color3.new(1,1,1)
+keyBox.BackgroundColor3 = Color3.fromRGB(45,45,45)
+keyBox.Parent = frame
+
+local boxCorner = Instance.new("UICorner")
+boxCorner.Parent = keyBox
+boxCorner.CornerRadius = UDim.new(0,8)
+
+local outline = Instance.new("UIStroke")
+outline.Color = Color3.fromRGB(170,0,255)
+outline.Thickness = 3
+outline.Parent = keyBox
+
+
+local submit = Instance.new("TextButton")
+submit.Size = UDim2.new(0.75,0,0,40)
+submit.Position = UDim2.new(0.125,0,0,140)
+submit.Text = "Enter Key"
+submit.BackgroundColor3 = Color3.fromRGB(90,0,140)
+submit.TextColor3 = Color3.new(1,1,1)
+submit.Font = Enum.Font.GothamBold
+submit.Parent = frame
+
+
+local discord = Instance.new("TextButton")
+discord.Size = UDim2.new(0.75,0,0,35)
+discord.Position = UDim2.new(0.125,0,0,190)
+discord.Text = "Join Discord for Key"
+discord.BackgroundColor3 = Color3.fromRGB(60,60,60)
+discord.TextColor3 = Color3.new(1,1,1)
+discord.Parent = frame
+
+
+discord.MouseButton1Click:Connect(function()
+	if setclipboard then
+		setclipboard(DISCORD_LINK)
+	end
+	discord.Text = "Discord Link Copied!"
+end)
+
+
+local unlocked = false
+
+submit.MouseButton1Click:Connect(function()
+
+	if keyBox.Text == REQUIRED_KEY then
+
+		unlocked = true
+		gui:Destroy()
+
+	else
+
+		keyBox.Text = ""
+		keyBox.PlaceholderText = "Wrong Key"
+
+	end
+
+end)
+
+
+repeat task.wait() until unlocked
+
+
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
