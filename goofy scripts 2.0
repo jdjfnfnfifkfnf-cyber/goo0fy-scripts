@@ -252,71 +252,67 @@ local function createTool(character)
 
 	local function toggleFly()
 
-		flying = not flying
+	flying = not flying
 
-		if flying then
+	if flying then
 
-			bodyVelocity = Instance.new("BodyVelocity")
-			bodyVelocity.Name = "FlyVelocity"
-			bodyVelocity.MaxForce = Vector3.new(
-				math.huge,
-				math.huge,
-				math.huge
-			)
-			bodyVelocity.Velocity = Vector3.zero
-			bodyVelocity.Parent = root
-
-
-			bodyGyro = Instance.new("BodyGyro")
-			bodyGyro.Name = "FlyGyro"
-			bodyGyro.MaxTorque = Vector3.new(
-				math.huge,
-				math.huge,
-				math.huge
-			)
-			bodyGyro.P = 10000
-			bodyGyro.D = 500
-			bodyGyro.CFrame = workspace.CurrentCamera.CFrame
-			bodyGyro.Parent = root
+		bodyVelocity = Instance.new("BodyVelocity")
+		bodyVelocity.Name = "FlyVelocity"
+		bodyVelocity.MaxForce = Vector3.new(
+			math.huge,
+			math.huge,
+			math.huge
+		)
+		bodyVelocity.Velocity = Vector3.zero
+		bodyVelocity.Parent = root
 
 
-			humanoid.PlatformStand = true
+		bodyGyro = Instance.new("BodyGyro")
+		bodyGyro.Name = "FlyGyro"
+		bodyGyro.MaxTorque = Vector3.new(
+			math.huge,
+			math.huge,
+			math.huge
+		)
+		bodyGyro.P = 10000
+		bodyGyro.D = 500
+		bodyGyro.CFrame = workspace.CurrentCamera.CFrame
+		bodyGyro.Parent = root
 
 
-			flyButton.Text = "✈ Fly ON (F)"
-			flyButton.BackgroundColor3 = Color3.fromRGB(0,170,90)
+		humanoid.PlatformStand = true
 
 
-		else
-
-			if bodyVelocity then
-				bodyVelocity.Velocity = Vector3.zero
-				bodyVelocity:Destroy()
-				bodyVelocity = nil
-			end
+		-- Fly ON appearance
+		flyButton.Text = "✈ Fly ON (F)"
+		flyButton.BackgroundColor3 = Color3.fromRGB(0,255,0)
 
 
-			if bodyGyro then
-				bodyGyro:Destroy()
-				bodyGyro = nil
-			end
+	else
 
-
-			humanoid.PlatformStand = false
-
-			task.wait()
-			humanoid:ChangeState(Enum.HumanoidStateType.Running)
-
-
-			flyButton.Text = "✈ Fly OFF (F)"
-			flyButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
-
+		if bodyVelocity then
+			bodyVelocity:Destroy()
+			bodyVelocity = nil
 		end
+
+
+		if bodyGyro then
+			bodyGyro:Destroy()
+			bodyGyro = nil
+		end
+
+
+		humanoid.PlatformStand = false
+		humanoid:ChangeState(Enum.HumanoidStateType.Running)
+
+
+		-- Fly OFF appearance
+		flyButton.Text = "✈ Fly OFF (F)"
+		flyButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
 
 	end
 
-
-	flyButton.MouseButton1Click:Connect(toggleFly)
+end
 	-- Fly Speed Display
 
 	local speedLabel = Instance.new("TextLabel")
