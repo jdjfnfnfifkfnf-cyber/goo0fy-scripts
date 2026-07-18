@@ -432,29 +432,29 @@ local function createTool(character)
 
 	inputConnection = UserInputService.InputBegan:Connect(function(input, processed)
 
-		if processed then
-			return
-		end
+	if input.UserInputType ~= Enum.UserInputType.Keyboard then
+		return
+	end
 
 
-		keys[input.KeyCode] = true
+	keys[input.KeyCode] = true
 
 
-		if input.KeyCode == Enum.KeyCode.F then
-			toggleFly()
-		end
+	if input.KeyCode == Enum.KeyCode.F then
+		toggleFly()
+	end
 
 
-		if input.KeyCode == Enum.KeyCode.Z then
-			toggleSpeed()
-		end
+	if input.KeyCode == Enum.KeyCode.Z then
+		toggleSpeed()
+	end
 
 
-		if input.KeyCode == Enum.KeyCode.Q then
-			teleportToCursor()
-		end
+	if input.KeyCode == Enum.KeyCode.Q then
+		teleportToCursor()
+	end
 
-	end)
+end)
 
 
 	UserInputService.InputEnded:Connect(function(input)
