@@ -162,7 +162,7 @@ minimize.MouseButton1Click:Connect(function()
 
 end
 
--- Fix tab overlap after opening menu
+-- Reset to Cheats tab when opening
 scriptSection.Visible = true
 controlSection.Visible = false
 
