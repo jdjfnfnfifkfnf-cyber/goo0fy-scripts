@@ -12,153 +12,153 @@ repeat task.wait() until player.Character
 
 local function createTool(character)
 
-	local humanoid = character:WaitForChild("Humanoid")
-	local root = character:WaitForChild("HumanoidRootPart")
+    local humanoid = character:WaitForChild("Humanoid")
+    local root = character:WaitForChild("HumanoidRootPart")
 
 
-	local oldGui = PlayerGui:FindFirstChild("GoofyScripts")
+    local oldGui = PlayerGui:FindFirstChild("GoofyScripts")
 
-	if oldGui then
-		oldGui:Destroy()
-	end
-
-
-	local gui = Instance.new("ScreenGui")
-	gui.Name = "GoofyScripts"
-	gui.ResetOnSpawn = false
-	gui.IgnoreGuiInset = true
-	gui.Parent = PlayerGui
+    if oldGui then
+        oldGui:Destroy()
+    end
 
 
-	local frame = Instance.new("Frame")
-	frame.Size = UDim2.new(0,450,0,560)
-	frame.Position = UDim2.new(.5,-225,.5,-280)
-	frame.BackgroundColor3 = Color3.fromRGB(25,25,30)
-	frame.Parent = gui
-
-	Instance.new("UICorner",frame).CornerRadius = UDim.new(0,15)
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "GoofyScripts"
+    gui.ResetOnSpawn = false
+    gui.IgnoreGuiInset = true
+    gui.Parent = PlayerGui
 
 
-	local stroke = Instance.new("UIStroke")
-	stroke.Color = Color3.fromRGB(140,0,255)
-	stroke.Thickness = 3
-	stroke.Parent = frame
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0,450,0,560)
+    frame.Position = UDim2.new(.5,-225,.5,-280)
+    frame.BackgroundColor3 = Color3.fromRGB(25,25,30)
+    frame.Parent = gui
+
+    Instance.new("UICorner",frame).CornerRadius = UDim.new(0,15)
 
 
-	local title = Instance.new("TextLabel")
-	title.Size = UDim2.new(1,-100,0,45)
-	title.Position = UDim2.new(0,10,0,0)
-	title.BackgroundTransparency = 1
-	title.Text = "HyperMint Scripts"
-	title.TextColor3 = Color3.new(1,1,1)
-	title.Font = Enum.Font.GothamBold
-	title.TextSize = 24
-	title.Parent = frame
+    local stroke = Instance.new("UIStroke")
+    stroke.Color = Color3.fromRGB(140,0,255)
+    stroke.Thickness = 3
+    stroke.Parent = frame
 
 
-	local close = Instance.new("TextButton")
-	close.Size = UDim2.new(0,35,0,35)
-	close.Position = UDim2.new(1,-40,0,5)
-	close.Text = "X"
-	close.BackgroundColor3 = Color3.fromRGB(220,60,60)
-	close.TextColor3 = Color3.new(1,1,1)
-	close.Parent = frame
-
-	Instance.new("UICorner",close).CornerRadius = UDim.new(1,0)
-
-
-	local minimize = Instance.new("TextButton")
-	minimize.Size = UDim2.new(0,35,0,35)
-	minimize.Position = UDim2.new(1,-80,0,5)
-	minimize.Text = "-"
-	minimize.BackgroundColor3 = Color3.fromRGB(80,80,80)
-	minimize.TextColor3 = Color3.new(1,1,1)
-	minimize.Parent = frame
-
-	Instance.new("UICorner",minimize).CornerRadius = UDim.new(1,0)
+    local title = Instance.new("TextLabel")
+    title.Size = UDim2.new(1,-100,0,45)
+    title.Position = UDim2.new(0,10,0,0)
+    title.BackgroundTransparency = 1
+    title.Text = "HyperMint Scripts"
+    title.TextColor3 = Color3.new(1,1,1)
+    title.Font = Enum.Font.GothamBold
+    title.TextSize = 24
+    title.Parent = frame
 
 
-	close.MouseButton1Click:Connect(function()
-		gui:Destroy()
-	end)
+    local close = Instance.new("TextButton")
+    close.Size = UDim2.new(0,35,0,35)
+    close.Position = UDim2.new(1,-40,0,5)
+    close.Text = "X"
+    close.BackgroundColor3 = Color3.fromRGB(220,60,60)
+    close.TextColor3 = Color3.new(1,1,1)
+    close.Parent = frame
+
+    Instance.new("UICorner",close).CornerRadius = UDim.new(1,0)
 
 
-	local fullSize = frame.Size
-	local minimized = false
+    local minimize = Instance.new("TextButton")
+    minimize.Size = UDim2.new(0,35,0,35)
+    minimize.Position = UDim2.new(1,-80,0,5)
+    minimize.Text = "-"
+    minimize.BackgroundColor3 = Color3.fromRGB(80,80,80)
+    minimize.TextColor3 = Color3.new(1,1,1)
+    minimize.Parent = frame
+
+    Instance.new("UICorner",minimize).CornerRadius = UDim.new(1,0)
 
 
-	
-	-- Tabs
-
-	local scriptTab = Instance.new("TextButton")
-	scriptTab.Size = UDim2.new(.5,0,0,40)
-	scriptTab.Position = UDim2.new(0,0,0,50)
-	scriptTab.Text = "Cheats"
-	scriptTab.BackgroundColor3 = Color3.fromRGB(0,170,255)
-	scriptTab.TextColor3 = Color3.new(1,1,1)
-	scriptTab.Parent = frame
+    close.MouseButton1Click:Connect(function()
+        gui:Destroy()
+    end)
 
 
-	local controlTab = Instance.new("TextButton")
-	controlTab.Size = UDim2.new(.5,0,0,40)
-	controlTab.Position = UDim2.new(.5,0,0,50)
-	controlTab.Text = "Controls"
-	controlTab.BackgroundColor3 = Color3.fromRGB(80,80,80)
-	controlTab.TextColor3 = Color3.new(1,1,1)
-	controlTab.Parent = frame
+    local fullSize = frame.Size
+    local minimized = false
 
 
-	local scriptSection = Instance.new("Frame")
-	scriptSection.Size = UDim2.new(1,-20,1,-110)
-	scriptSection.Position = UDim2.new(0,10,0,100)
-	scriptSection.BackgroundTransparency = 1
-	scriptSection.Parent = frame
+    
+    -- Tabs
+
+    local scriptTab = Instance.new("TextButton")
+    scriptTab.Size = UDim2.new(.5,0,0,40)
+    scriptTab.Position = UDim2.new(0,0,0,50)
+    scriptTab.Text = "Cheats"
+    scriptTab.BackgroundColor3 = Color3.fromRGB(0,170,255)
+    scriptTab.TextColor3 = Color3.new(1,1,1)
+    scriptTab.Parent = frame
 
 
-	local controlSection = Instance.new("Frame")
-	controlSection.Size = UDim2.new(1,-20,1,-110)
-	controlSection.Position = UDim2.new(0,10,0,100)
-	controlSection.BackgroundTransparency = 1
-	controlSection.Visible = false
-	controlSection.Parent = frame
+    local controlTab = Instance.new("TextButton")
+    controlTab.Size = UDim2.new(.5,0,0,40)
+    controlTab.Position = UDim2.new(.5,0,0,50)
+    controlTab.Text = "Controls"
+    controlTab.BackgroundColor3 = Color3.fromRGB(80,80,80)
+    controlTab.TextColor3 = Color3.new(1,1,1)
+    controlTab.Parent = frame
+
+
+    local scriptSection = Instance.new("Frame")
+    scriptSection.Size = UDim2.new(1,-20,1,-110)
+    scriptSection.Position = UDim2.new(0,10,0,100)
+    scriptSection.BackgroundTransparency = 1
+    scriptSection.Parent = frame
+
+
+    local controlSection = Instance.new("Frame")
+    controlSection.Size = UDim2.new(1,-20,1,-110)
+    controlSection.Position = UDim2.new(0,10,0,100)
+    controlSection.BackgroundTransparency = 1
+    controlSection.Visible = false
+    controlSection.Parent = frame
 
 
 minimize.MouseButton1Click:Connect(function()
 
-	minimized = not minimized
+    minimized = not minimized
 
-	if minimized then
+    if minimized then
 
-		frame.Size = UDim2.new(0,450,0,50)
-		minimize.Text = "+"
-
-
-		for _, item in pairs(frame:GetChildren()) do
-
-			if item ~= title 
-			and item ~= close 
-			and item ~= minimize 
-			and not item:IsA("UICorner") 
-			and not item:IsA("UIStroke") then
-
-				item.Visible = false
-
-			end
-
-		end
+        frame.Size = UDim2.new(0,450,0,50)
+        minimize.Text = "+"
 
 
-	else
+        for _, item in pairs(frame:GetChildren()) do
 
-		frame.Size = fullSize
-		minimize.Text = "-"
+            if item ~= title 
+            and item ~= close 
+            and item ~= minimize 
+            and not item:IsA("UICorner") 
+            and not item:IsA("UIStroke") then
+
+                item.Visible = false
+
+            end
+
+        end
 
 
-		for _, item in pairs(frame:GetChildren()) do
+    else
 
-	if item:IsA("GuiObject") then
-		item.Visible = true
-	end
+        frame.Size = fullSize
+        minimize.Text = "-"
+
+
+        for _, item in pairs(frame:GetChildren()) do
+
+    if item:IsA("GuiObject") then
+        item.Visible = true
+    end
 
 end
 
@@ -166,464 +166,688 @@ end
 scriptSection.Visible = true
 controlSection.Visible = false
 
-	end
+    end
 
 end)
 
-	scriptTab.MouseButton1Click:Connect(function()
-		scriptSection.Visible = true
-		controlSection.Visible = false
-	end)
+    scriptTab.MouseButton1Click:Connect(function()
+        scriptSection.Visible = true
+        controlSection.Visible = false
+    end)
 
 
-	controlTab.MouseButton1Click:Connect(function()
-		scriptSection.Visible = false
-		controlSection.Visible = true
-	end)
+    controlTab.MouseButton1Click:Connect(function()
+        scriptSection.Visible = false
+        controlSection.Visible = true
+    end)
 
 
-	-- Variables
+    -- Variables
 
-	local normalSpeed = humanoid.WalkSpeed
-	local speedEnabled = false
+    local normalSpeed = humanoid.WalkSpeed
+    local speedEnabled = false
 
-	local flying = false
-	local flySpeed = 50
+    local flying = false
+    local flySpeed = 50
 
-	local bodyVelocity
-	local bodyGyro
+    local bodyVelocity
+    local bodyGyro
 
-	local keys = {}
-
-
-	-- Speed Box
-
-	local walkBox = Instance.new("TextBox")
-	walkBox.Size = UDim2.new(.75,0,0,40)
-	walkBox.Position = UDim2.new(.125,0,0,20)
-	walkBox.Text = "50"
-	walkBox.TextColor3 = Color3.new(1,1,1)
-	walkBox.BackgroundColor3 = Color3.fromRGB(60,60,65)
-	walkBox.Parent = scriptSection
-
-	Instance.new("UICorner",walkBox).CornerRadius = UDim.new(0,8)
+    local keys = {}
 
 
-	local speedButton = Instance.new("TextButton")
-	speedButton.Size = UDim2.new(.75,0,0,40)
-	speedButton.Position = UDim2.new(.125,0,0,70)
-	speedButton.Text = "⚡ Speed OFF (T)"
-	speedButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
-	speedButton.TextColor3 = Color3.new(1,1,1)
-	speedButton.Parent = scriptSection
+    -- Speed Box
 
-	Instance.new("UICorner",speedButton).CornerRadius = UDim.new(0,8)
+    local walkBox = Instance.new("TextBox")
+    walkBox.Size = UDim2.new(.75,0,0,40)
+    walkBox.Position = UDim2.new(.125,0,0,20)
+    walkBox.Text = "50"
+    walkBox.TextColor3 = Color3.new(1,1,1)
+    walkBox.BackgroundColor3 = Color3.fromRGB(60,60,65)
+    walkBox.Parent = scriptSection
 
-
-	local function toggleSpeed()
-
-		speedEnabled = not speedEnabled
-
-		if speedEnabled then
-			humanoid.WalkSpeed = tonumber(walkBox.Text) or 50
-			speedButton.Text = "⚡ Speed ON (T)"
-			speedButton.BackgroundColor3 = Color3.fromRGB(0,170,90)
-		else
-			humanoid.WalkSpeed = normalSpeed
-			speedButton.Text = "⚡ Speed OFF (T)"
-			speedButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
-		end
-
-	end
+    Instance.new("UICorner",walkBox).CornerRadius = UDim.new(0,8)
 
 
-	speedButton.MouseButton1Click:Connect(toggleSpeed)
+    local speedButton = Instance.new("TextButton")
+    speedButton.Size = UDim2.new(.75,0,0,40)
+    speedButton.Position = UDim2.new(.125,0,0,70)
+    speedButton.Text = "⚡ Speed OFF (T)"
+    speedButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
+    speedButton.TextColor3 = Color3.new(1,1,1)
+    speedButton.Parent = scriptSection
+
+    Instance.new("UICorner",speedButton).CornerRadius = UDim.new(0,8)
 
 
-	walkBox.FocusLost:Connect(function()
-		if speedEnabled then
-			humanoid.WalkSpeed = tonumber(walkBox.Text) or 50
-		end
-	end)
+    local function toggleSpeed()
+
+        speedEnabled = not speedEnabled
+
+        if speedEnabled then
+            humanoid.WalkSpeed = tonumber(walkBox.Text) or 50
+            speedButton.Text = "⚡ Speed ON (T)"
+            speedButton.BackgroundColor3 = Color3.fromRGB(0,170,90)
+        else
+            humanoid.WalkSpeed = normalSpeed
+            speedButton.Text = "⚡ Speed OFF (T)"
+            speedButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
+        end
+
+    end
 
 
-	-- Teleport
-
-	local teleport = Instance.new("TextButton")
-	teleport.Size = UDim2.new(.75,0,0,40)
-	teleport.Position = UDim2.new(.125,0,0,125)
-	teleport.Text = "📍 Teleport To Cursor (Q)"
-	teleport.BackgroundColor3 = Color3.fromRGB(255,170,0)
-	teleport.TextColor3 = Color3.new(1,1,1)
-	teleport.Parent = scriptSection
-
-	Instance.new("UICorner",teleport).CornerRadius = UDim.new(0,8)
+    speedButton.MouseButton1Click:Connect(toggleSpeed)
 
 
-	local function teleportToCursor()
-
-		root.CFrame = CFrame.new(
-			mouse.Hit.Position + Vector3.new(0,3,0)
-		)
-
-	end
+    walkBox.FocusLost:Connect(function()
+        if speedEnabled then
+            humanoid.WalkSpeed = tonumber(walkBox.Text) or 50
+        end
+    end)
 
 
-	teleport.MouseButton1Click:Connect(teleportToCursor)
+    -- Teleport
+
+    local teleport = Instance.new("TextButton")
+    teleport.Size = UDim2.new(.75,0,0,40)
+    teleport.Position = UDim2.new(.125,0,0,125)
+    teleport.Text = "📍 Teleport To Cursor (Q)"
+    teleport.BackgroundColor3 = Color3.fromRGB(255,170,0)
+    teleport.TextColor3 = Color3.new(1,1,1)
+    teleport.Parent = scriptSection
+
+    Instance.new("UICorner",teleport).CornerRadius = UDim.new(0,8)
 
 
-	-- Fly Button
+    local function teleportToCursor()
 
-	local flyButton = Instance.new("TextButton")
-	flyButton.Size = UDim2.new(.75,0,0,40)
-	flyButton.Position = UDim2.new(.125,0,0,180)
-	flyButton.Text = "✈ Fly OFF (F)"
-	flyButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
-	flyButton.TextColor3 = Color3.new(1,1,1)
-	flyButton.Parent = scriptSection
+        root.CFrame = CFrame.new(
+            mouse.Hit.Position + Vector3.new(0,3,0)
+        )
 
-	Instance.new("UICorner",flyButton).CornerRadius = UDim.new(0,8)
+    end
 
 
-	local function toggleFly()
-
-	flying = not flying
-
-	if flying then
-
-		bodyVelocity = Instance.new("BodyVelocity")
-		bodyVelocity.Name = "FlyVelocity"
-		bodyVelocity.MaxForce = Vector3.new(
-			math.huge,
-			math.huge,
-			math.huge
-		)
-		bodyVelocity.Velocity = Vector3.zero
-		bodyVelocity.Parent = root
+    teleport.MouseButton1Click:Connect(teleportToCursor)
 
 
-		bodyGyro = Instance.new("BodyGyro")
-		bodyGyro.Name = "FlyGyro"
-		bodyGyro.MaxTorque = Vector3.new(
-			math.huge,
-			math.huge,
-			math.huge
-		)
-		bodyGyro.P = 10000
-		bodyGyro.D = 500
-		bodyGyro.CFrame = workspace.CurrentCamera.CFrame
-		bodyGyro.Parent = root
+    -- Fly Button
+
+    local flyButton = Instance.new("TextButton")
+    flyButton.Size = UDim2.new(.75,0,0,40)
+    flyButton.Position = UDim2.new(.125,0,0,180)
+    flyButton.Text = "✈ Fly OFF (F)"
+    flyButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
+    flyButton.TextColor3 = Color3.new(1,1,1)
+    flyButton.Parent = scriptSection
+
+    Instance.new("UICorner",flyButton).CornerRadius = UDim.new(0,8)
 
 
-		humanoid.PlatformStand = true
+    local function toggleFly()
+
+    flying = not flying
+
+    if flying then
+
+        bodyVelocity = Instance.new("BodyVelocity")
+        bodyVelocity.Name = "FlyVelocity"
+        bodyVelocity.MaxForce = Vector3.new(
+            math.huge,
+            math.huge,
+            math.huge
+        )
+        bodyVelocity.Velocity = Vector3.zero
+        bodyVelocity.Parent = root
 
 
-		-- Fly ON appearance
-		flyButton.Text = "✈ Fly ON (F)"
-		flyButton.BackgroundColor3 = Color3.fromRGB(0,255,0)
+        bodyGyro = Instance.new("BodyGyro")
+        bodyGyro.Name = "FlyGyro"
+        bodyGyro.MaxTorque = Vector3.new(
+            math.huge,
+            math.huge,
+            math.huge
+        )
+        bodyGyro.P = 10000
+        bodyGyro.D = 500
+        bodyGyro.CFrame = workspace.CurrentCamera.CFrame
+        bodyGyro.Parent = root
 
 
-	else
-
-		if bodyVelocity then
-			bodyVelocity:Destroy()
-			bodyVelocity = nil
-		end
+        humanoid.PlatformStand = true
 
 
-		if bodyGyro then
-			bodyGyro:Destroy()
-			bodyGyro = nil
-		end
+        -- Fly ON appearance
+        flyButton.Text = "✈ Fly ON (F)"
+        flyButton.BackgroundColor3 = Color3.fromRGB(0,255,0)
 
 
-		humanoid.PlatformStand = false
-		humanoid:ChangeState(Enum.HumanoidStateType.Running)
+    else
+
+        if bodyVelocity then
+            bodyVelocity:Destroy()
+            bodyVelocity = nil
+        end
 
 
-		-- Fly OFF appearance
-		flyButton.Text = "✈ Fly OFF (F)"
-		flyButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
+        if bodyGyro then
+            bodyGyro:Destroy()
+            bodyGyro = nil
+        end
 
-	end
+
+        humanoid.PlatformStand = false
+        humanoid:ChangeState(Enum.HumanoidStateType.Running)
+
+
+        -- Fly OFF appearance
+        flyButton.Text = "✈ Fly OFF (F)"
+        flyButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
+
+    end
 
 end
-	-- Fly Speed Display
+    -- Fly Speed Display
 
-	local speedLabel = Instance.new("TextLabel")
+    local speedLabel = Instance.new("TextLabel")
 
-	speedLabel.Size = UDim2.new(.75,0,0,30)
-	speedLabel.Position = UDim2.new(.125,0,0,230)
-	speedLabel.BackgroundTransparency = 1
-	speedLabel.Text = "Fly Speed: "..flySpeed
-	speedLabel.TextColor3 = Color3.new(1,1,1)
-	speedLabel.Font = Enum.Font.GothamBold
-	speedLabel.Parent = scriptSection
-
-
-	local slider = Instance.new("Frame")
-
-	slider.Size = UDim2.new(.75,0,0,14)
-	slider.Position = UDim2.new(.125,0,0,265)
-	slider.BackgroundColor3 = Color3.fromRGB(70,70,70)
-	slider.Parent = scriptSection
-
-	Instance.new("UICorner",slider).CornerRadius = UDim.new(1,0)
+    speedLabel.Size = UDim2.new(.75,0,0,30)
+    speedLabel.Position = UDim2.new(.125,0,0,230)
+    speedLabel.BackgroundTransparency = 1
+    speedLabel.Text = "Fly Speed: "..flySpeed
+    speedLabel.TextColor3 = Color3.new(1,1,1)
+    speedLabel.Font = Enum.Font.GothamBold
+    speedLabel.Parent = scriptSection
 
 
-	local fill = Instance.new("Frame")
+    local slider = Instance.new("Frame")
 
-	fill.Size = UDim2.new(.15,0,1,0)
-	fill.BackgroundColor3 = Color3.fromRGB(0,170,255)
-	fill.Parent = slider
+    slider.Size = UDim2.new(.75,0,0,14)
+    slider.Position = UDim2.new(.125,0,0,265)
+    slider.BackgroundColor3 = Color3.fromRGB(70,70,70)
+    slider.Parent = scriptSection
 
-	Instance.new("UICorner",fill).CornerRadius = UDim.new(1,0)
-
-
-	local sliderDragging = false
+    Instance.new("UICorner",slider).CornerRadius = UDim.new(1,0)
 
 
-	local function updateSlider(x)
+    local fill = Instance.new("Frame")
 
-		local percent = math.clamp(
-			(x-slider.AbsolutePosition.X) /
-			slider.AbsoluteSize.X,
-			0,
-			1
-		)
+    fill.Size = UDim2.new(.15,0,1,0)
+    fill.BackgroundColor3 = Color3.fromRGB(0,170,255)
+    fill.Parent = slider
 
-		fill.Size = UDim2.new(percent,0,1,0)
-
-		flySpeed = math.floor(
-			10 + ((300-10)*percent)
-		)
-
-		speedLabel.Text = "Fly Speed: "..flySpeed
-
-	end
+    Instance.new("UICorner",fill).CornerRadius = UDim.new(1,0)
 
 
-	slider.InputBegan:Connect(function(input)
-
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-
-			sliderDragging = true
-			updateSlider(input.Position.X)
-
-		end
-
-	end)
+    local sliderDragging = false
 
 
-	UserInputService.InputChanged:Connect(function(input)
+    local function updateSlider(x)
 
-		if sliderDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local percent = math.clamp(
+            (x-slider.AbsolutePosition.X) /
+            slider.AbsoluteSize.X,
+            0,
+            1
+        )
 
-			updateSlider(input.Position.X)
+        fill.Size = UDim2.new(percent,0,1,0)
 
-		end
+        flySpeed = math.floor(
+            10 + ((300-10)*percent)
+        )
 
-	end)
+        speedLabel.Text = "Fly Speed: "..flySpeed
 
-
-	UserInputService.InputEnded:Connect(function(input)
-
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-
-			sliderDragging = false
-
-		end
-
-	end)
+    end
 
 
-	-- Controls / Keybinds
+    slider.InputBegan:Connect(function(input)
 
-	local controls = Instance.new("TextLabel")
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
 
-	controls.Size = UDim2.new(1,0,0,350)
-	controls.BackgroundTransparency = 1
-	controls.Text =
-		"⌨ CONTROLS\n\n"..
-		"F = Toggle Fly\n\n"..
-		"T = Toggle Speed\n\n"..
-		"Q = Teleport\n\n"..
-		"WASD = Fly Movement\n\n"..
-		"Space = Up\n\n"..
-		"CTRL = Down\n\n"..
-		"Fly Speed Slider: 10-300"
+            sliderDragging = true
+            updateSlider(input.Position.X)
 
-	controls.TextColor3 = Color3.new(1,1,1)
-	controls.TextSize = 20
-	controls.Font = Enum.Font.GothamBold
-	controls.Parent = controlSection
+        end
+
+    end)
 
 
-	local inputConnection
+    UserInputService.InputChanged:Connect(function(input)
 
-	inputConnection = UserInputService.InputBegan:Connect(function(input, processed)
+        if sliderDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
 
-	if input.UserInputType ~= Enum.UserInputType.Keyboard then
-		return
-	end
+            updateSlider(input.Position.X)
+
+        end
+
+    end)
 
 
-	keys[input.KeyCode] = true
+    UserInputService.InputEnded:Connect(function(input)
+
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+            sliderDragging = false
+
+        end
+
+    end)
+
+    -- ==========================================
+    -- [[ INSERT ESP CODE STARTING HERE ]]
+    -- ==========================================
+
+    -- ESP Variables
+    local espEnabled = false
+    local espObjects = {}
+
+    -- ESP Toggle Button
+    local espButton = Instance.new("TextButton")
+    espButton.Size = UDim2.new(.75,0,0,40)
+    espButton.Position = UDim2.new(.125,0,0,295)
+    espButton.Text = "👁 ESP OFF (G)"
+    espButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
+    espButton.TextColor3 = Color3.new(1,1,1)
+    espButton.Parent = scriptSection
+
+    Instance.new("UICorner",espButton).CornerRadius = UDim.new(0,8)
+
+    -- ESP Color Picker
+    local espColorLabel = Instance.new("TextLabel")
+    espColorLabel.Size = UDim2.new(.75,0,0,25)
+    espColorLabel.Position = UDim2.new(.125,0,0,345)
+    espColorLabel.BackgroundTransparency = 1
+    espColorLabel.Text = "ESP Color:"
+    espColorLabel.TextColor3 = Color3.new(1,1,1)
+    espColorLabel.Font = Enum.Font.GothamBold
+    espColorLabel.TextSize = 16
+    espColorLabel.Parent = scriptSection
+
+    local espColorBox = Instance.new("TextBox")
+    espColorBox.Size = UDim2.new(.75,0,0,35)
+    espColorBox.Position = UDim2.new(.125,0,0,375)
+    espColorBox.Text = "255,0,0"
+    espColorBox.PlaceholderText = "R,G,B (0-255)"
+    espColorBox.BackgroundColor3 = Color3.fromRGB(60,60,65)
+    espColorBox.TextColor3 = Color3.new(1,1,1)
+    espColorBox.Parent = scriptSection
+
+    Instance.new("UICorner",espColorBox).CornerRadius = UDim.new(0,8)
+
+    -- ESP Toggle Function
+    local function toggleESP()
+        espEnabled = not espEnabled
+        
+        if espEnabled then
+            espButton.Text = "👁 ESP ON (G)"
+            espButton.BackgroundColor3 = Color3.fromRGB(0,170,90)
+            updateESP()
+        else
+            espButton.Text = "👁 ESP OFF (G)"
+            espButton.BackgroundColor3 = Color3.fromRGB(60,60,65)
+            clearESP()
+        end
+    end
+
+    -- Clear all ESP objects
+    local function clearESP()
+        for _, obj in pairs(espObjects) do
+            if obj and obj.Parent then
+                obj:Destroy()
+            end
+        end
+        espObjects = {}
+    end
+
+    -- Parse color from text box
+    local function parseColor(text)
+        local r, g, b = text:match("(%d+),(%d+),(%d+)")
+        if r and g and b then
+            return Color3.fromRGB(
+                math.clamp(tonumber(r) or 255, 0, 255),
+                math.clamp(tonumber(g) or 0, 0, 255),
+                math.clamp(tonumber(b) or 0, 0, 255)
+            )
+        end
+        return Color3.fromRGB(255, 0, 0) -- Default red
+    end
+
+    -- Update ESP for all players
+    local function updateESP()
+        clearESP()
+        
+        if not espEnabled then return end
+        
+        local espColor = parseColor(espColorBox.Text)
+        
+        for _, otherPlayer in pairs(game.Players:GetPlayers()) do
+            if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("Humanoid") then
+                local character = otherPlayer.Character
+                local humanoid = character:FindFirstChild("Humanoid")
+                
+                if humanoid and humanoid.Health > 0 then
+                    -- Create Highlight
+                    local highlight = Instance.new("Highlight")
+                    highlight.Adornee = character
+                    highlight.FillColor = espColor
+                    highlight.FillTransparency = 0.5
+                    highlight.OutlineColor = espColor
+                    highlight.OutlineTransparency = 0
+                    highlight.Parent = character
+                    table.insert(espObjects, highlight)
+                    
+                    -- Create Billboard GUI for name/distance
+                    local billboard = Instance.new("BillboardGui")
+                    billboard.Adornee = character:FindFirstChild("Head") or character:FindFirstChild("HumanoidRootPart")
+                    billboard.Size = UDim2.new(0, 200, 0, 50)
+                    billboard.StudsOffset = Vector3.new(0, 3, 0)
+                    billboard.AlwaysOnTop = true
+                    billboard.Parent = character
+                    table.insert(espObjects, billboard)
+                    
+                    -- Name Label
+                    local nameLabel = Instance.new("TextLabel")
+                    nameLabel.Size = UDim2.new(1, 0, 0.5, 0)
+                    nameLabel.BackgroundTransparency = 1
+                    nameLabel.Text = otherPlayer.Name
+                    nameLabel.TextColor3 = espColor
+                    nameLabel.TextScaled = true
+                    nameLabel.Font = Enum.Font.GothamBold
+                    nameLabel.Parent = billboard
+                    
+                    -- Distance Label
+                    local distLabel = Instance.new("TextLabel")
+                    distLabel.Size = UDim2.new(1, 0, 0.5, 0)
+                    distLabel.Position = UDim2.new(0, 0, 0.5, 0)
+                    distLabel.BackgroundTransparency = 1
+                    distLabel.Text = "0 studs"
+                    distLabel.TextColor3 = Color3.new(1, 1, 1)
+                    distLabel.TextScaled = true
+                    distLabel.Font = Enum.Font.GothamBold
+                    distLabel.Parent = billboard
+                    
+                    -- Update distance every frame
+                    local connection
+                    connection = RunService.RenderStepped:Connect(function()
+                        if not billboard or not billboard.Parent then
+                            if connection then connection:Disconnect() end
+                            return
+                        end
+                        
+                        local root = character:FindFirstChild("HumanoidRootPart")
+                        local myRoot = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+                        
+                        if root and myRoot then
+                            local distance = (root.Position - myRoot.Position).Magnitude
+                            distLabel.Text = math.floor(distance) .. " studs"
+                        end
+                    end)
+                    table.insert(espObjects, connection)
+                    
+                    -- Health bar
+                    local healthBar = Instance.new("Frame")
+                    healthBar.Size = UDim2.new(1, 0, 0, 5)
+                    healthBar.Position = UDim2.new(0, 0, 1, 0)
+                    healthBar.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+                    healthBar.BorderSizePixel = 0
+                    healthBar.Parent = billboard
+                    
+                    -- Update health bar
+                    local healthConnection
+                    healthConnection = RunService.RenderStepped:Connect(function()
+                        if not healthBar or not healthBar.Parent then
+                            if healthConnection then healthConnection:Disconnect() end
+                            return
+                        end
+                        
+                        if humanoid then
+                            local healthPercent = humanoid.Health / humanoid.MaxHealth
+                            healthBar.Size = UDim2.new(healthPercent, 0, 1, 0)
+                            
+                            if healthPercent > 0.5 then
+                                healthBar.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+                            elseif healthPercent > 0.25 then
+                                healthBar.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+                            else
+                                healthBar.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+                            end
+                        end
+                    end)
+                    table.insert(espObjects, healthConnection)
+                end
+            end
+        end
+    end
+
+    -- Connect ESP button
+    espButton.MouseButton1Click:Connect(toggleESP)
+
+    -- Update ESP when color changes
+    espColorBox.FocusLost:Connect(function()
+        if espEnabled then
+            updateESP()
+        end
+    end)
+
+    -- Update ESP when new players join or characters change
+    game.Players.PlayerAdded:Connect(function()
+        if espEnabled then
+            task.wait(1)
+            updateESP()
+        end
+    end)
+
+    game.Players.PlayerRemoving:Connect(function()
+        if espEnabled then
+            task.wait(0.5)
+            updateESP()
+        end
+    end)
+
+    -- Add keybind for ESP (G key)
+    UserInputService.InputBegan:Connect(function(input, processed)
+        if input.UserInputType == Enum.UserInputType.Keyboard then
+            if input.KeyCode == Enum.KeyCode.G then
+                toggleESP()
+            end
+        end
+    end)
+
+    -- ==========================================
+    -- [[ ESP CODE ENDS HERE ]]
+    -- ==========================================
+
+    -- Controls / Keybinds
+
+    local controls = Instance.new("TextLabel")
+
+    controls.Size = UDim2.new(1,0,0,350)
+    controls.BackgroundTransparency = 1
+    controls.Text =
+        "⌨ CONTROLS\n\n"..
+        "F = Toggle Fly\n\n"..
+        "T = Toggle Speed\n\n"..
+        "Q = Teleport\n\n"..
+        "G = Toggle ESP\n\n"..
+        "WASD = Fly Movement\n\n"..
+        "Space = Up\n\n"..
+        "CTRL = Down\n\n"..
+        "Fly Speed Slider: 10-300"
+
+    controls.TextColor3 = Color3.new(1,1,1)
+    controls.TextSize = 20
+    controls.Font = Enum.Font.GothamBold
+    controls.Parent = controlSection
 
 
-	if input.KeyCode == Enum.KeyCode.F then
-		toggleFly()
-	end
+    local inputConnection
+
+    inputConnection = UserInputService.InputBegan:Connect(function(input, processed)
+
+    if input.UserInputType ~= Enum.UserInputType.Keyboard then
+        return
+    end
+
+
+    keys[input.KeyCode] = true
+
+
+    if input.KeyCode == Enum.KeyCode.F then
+        toggleFly()
+    end
 
 
 if input.KeyCode == Enum.KeyCode.T then
-	toggleSpeed()
+    toggleSpeed()
 end
 
 
-	if input.KeyCode == Enum.KeyCode.Q then
-		teleportToCursor()
-	end
+    if input.KeyCode == Enum.KeyCode.Q then
+        teleportToCursor()
+    end
 
 end)
 
 
-	UserInputService.InputEnded:Connect(function(input)
+    UserInputService.InputEnded:Connect(function(input)
 
-		keys[input.KeyCode] = false
+        keys[input.KeyCode] = false
 
-	end)
-
-
-
-	-- Flying Movement
-
-	RunService.RenderStepped:Connect(function()
-
-		if flying and bodyVelocity and bodyGyro and humanoid.Health > 0 then
-
-			local camera = workspace.CurrentCamera
-			local move = Vector3.zero
-
-
-			if keys[Enum.KeyCode.W] then
-				move += camera.CFrame.LookVector
-			end
-
-
-			if keys[Enum.KeyCode.S] then
-				move -= camera.CFrame.LookVector
-			end
-
-
-			if keys[Enum.KeyCode.A] then
-				move -= camera.CFrame.RightVector
-			end
-
-
-			if keys[Enum.KeyCode.D] then
-				move += camera.CFrame.RightVector
-			end
-
-
-			if keys[Enum.KeyCode.Space] then
-				move += Vector3.new(0,1,0)
-			end
-
-
-			if keys[Enum.KeyCode.LeftControl] then
-				move -= Vector3.new(0,1,0)
-			end
-
-
-			if move.Magnitude > 0 then
-				move = move.Unit
-			end
-
-
-			bodyVelocity.Velocity = move * flySpeed
-			bodyGyro.CFrame = camera.CFrame
-
-		end
-
-	end)
+    end)
 
 
 
-	-- Drag GUI
+    -- Flying Movement
 
-	local dragging = false
-	local dragStart
-	local startPos
+    RunService.RenderStepped:Connect(function()
 
+        if flying and bodyVelocity and bodyGyro and humanoid.Health > 0 then
 
-	title.InputBegan:Connect(function(input)
-
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-
-			dragging = true
-			dragStart = input.Position
-			startPos = frame.Position
-
-		end
-
-	end)
+            local camera = workspace.CurrentCamera
+            local move = Vector3.zero
 
 
-	UserInputService.InputEnded:Connect(function(input)
-
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-
-			dragging = false
-
-		end
-
-	end)
+            if keys[Enum.KeyCode.W] then
+                move += camera.CFrame.LookVector
+            end
 
 
-	UserInputService.InputChanged:Connect(function(input)
-
-		if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-
-			local delta = input.Position - dragStart
-
-			frame.Position = UDim2.new(
-				startPos.X.Scale,
-				startPos.X.Offset + delta.X,
-				startPos.Y.Scale,
-				startPos.Y.Offset + delta.Y
-			)
-
-		end
-
-	end)
+            if keys[Enum.KeyCode.S] then
+                move -= camera.CFrame.LookVector
+            end
 
 
-
-	-- Cleanup
-
-	close.MouseButton1Click:Connect(function()
-
-		if bodyVelocity then
-			bodyVelocity:Destroy()
-		end
+            if keys[Enum.KeyCode.A] then
+                move -= camera.CFrame.RightVector
+            end
 
 
-		if bodyGyro then
-			bodyGyro:Destroy()
-		end
+            if keys[Enum.KeyCode.D] then
+                move += camera.CFrame.RightVector
+            end
 
 
-		if inputConnection then
-			inputConnection:Disconnect()
-		end
+            if keys[Enum.KeyCode.Space] then
+                move += Vector3.new(0,1,0)
+            end
 
 
-		humanoid.PlatformStand = false
+            if keys[Enum.KeyCode.LeftControl] then
+                move -= Vector3.new(0,1,0)
+            end
 
-		gui:Destroy()
 
-	end)
+            if move.Magnitude > 0 then
+                move = move.Unit
+            end
+
+
+            bodyVelocity.Velocity = move * flySpeed
+            bodyGyro.CFrame = camera.CFrame
+
+        end
+
+    end)
+
+
+
+    -- Drag GUI
+
+    local dragging = false
+    local dragStart
+    local startPos
+
+
+    title.InputBegan:Connect(function(input)
+
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+            dragging = true
+            dragStart = input.Position
+            startPos = frame.Position
+
+        end
+
+    end)
+
+
+    UserInputService.InputEnded:Connect(function(input)
+
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+            dragging = false
+
+        end
+
+    end)
+
+
+    UserInputService.InputChanged:Connect(function(input)
+
+        if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+
+            local delta = input.Position - dragStart
+
+            frame.Position = UDim2.new(
+                startPos.X.Scale,
+                startPos.X.Offset + delta.X,
+                startPos.Y.Scale,
+                startPos.Y.Offset + delta.Y
+            )
+
+        end
+
+    end)
+
+
+
+    -- Cleanup
+
+    close.MouseButton1Click:Connect(function()
+
+        if bodyVelocity then
+            bodyVelocity:Destroy()
+        end
+
+
+        if bodyGyro then
+            bodyGyro:Destroy()
+        end
+
+
+        if inputConnection then
+            inputConnection:Disconnect()
+        end
+
+
+        humanoid.PlatformStand = false
+
+        gui:Destroy()
+
+    end)
 
 end
 
@@ -633,112 +857,112 @@ end
 
 local function createKeyGui()
 
-	local keyGui = Instance.new("ScreenGui")
-	keyGui.Name = "HyperMintKeySystem"
-	keyGui.ResetOnSpawn = false
-	keyGui.Parent = PlayerGui
+    local keyGui = Instance.new("ScreenGui")
+    keyGui.Name = "HyperMintKeySystem"
+    keyGui.ResetOnSpawn = false
+    keyGui.Parent = PlayerGui
 
 
-	local keyFrame = Instance.new("Frame")
-	keyFrame.Size = UDim2.new(0,350,0,250)
-	keyFrame.Position = UDim2.new(0.5,-175,0.5,-125)
-	keyFrame.BackgroundColor3 = Color3.fromRGB(25,25,30)
-	keyFrame.Parent = keyGui
+    local keyFrame = Instance.new("Frame")
+    keyFrame.Size = UDim2.new(0,350,0,250)
+    keyFrame.Position = UDim2.new(0.5,-175,0.5,-125)
+    keyFrame.BackgroundColor3 = Color3.fromRGB(25,25,30)
+    keyFrame.Parent = keyGui
 
 
-	local corner = Instance.new("UICorner")
-	corner.CornerRadius = UDim.new(0,15)
-	corner.Parent = keyFrame
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0,15)
+    corner.Parent = keyFrame
 
 
-	-- Purple outline around whole menu
-	local outline = Instance.new("UIStroke")
-	outline.Color = Color3.fromRGB(170,0,255)
-	outline.Thickness = 3
-	outline.Parent = keyFrame
+    -- Purple outline around whole menu
+    local outline = Instance.new("UIStroke")
+    outline.Color = Color3.fromRGB(170,0,255)
+    outline.Thickness = 3
+    outline.Parent = keyFrame
 
 
-	local creator = Instance.new("TextLabel")
-	creator.Size = UDim2.new(1,0,0,40)
-	creator.Position = UDim2.new(0,0,0,10)
-	creator.BackgroundTransparency = 1
-	creator.Text = "Created by HyperMint"
-	creator.TextColor3 = Color3.new(1,1,1)
-	creator.Font = Enum.Font.GothamBold
-	creator.TextSize = 22
-	creator.Parent = keyFrame
+    local creator = Instance.new("TextLabel")
+    creator.Size = UDim2.new(1,0,0,40)
+    creator.Position = UDim2.new(0,0,0,10)
+    creator.BackgroundTransparency = 1
+    creator.Text = "Created by HyperMint"
+    creator.TextColor3 = Color3.new(1,1,1)
+    creator.Font = Enum.Font.GothamBold
+    creator.TextSize = 22
+    creator.Parent = keyFrame
 
 
-	local text = Instance.new("TextLabel")
-	text.Size = UDim2.new(1,0,0,30)
-	text.Position = UDim2.new(0,0,0,55)
-	text.BackgroundTransparency = 1
-	text.Text = "Type key here"
-text.TextColor3 = Color3.fromRGB(170,0,255)	text.TextSize = 18
-	text.Parent = keyFrame
+    local text = Instance.new("TextLabel")
+    text.Size = UDim2.new(1,0,0,30)
+    text.Position = UDim2.new(0,0,0,55)
+    text.BackgroundTransparency = 1
+    text.Text = "Type key here"
+text.TextColor3 = Color3.fromRGB(170,0,255) text.TextSize = 18
+    text.Parent = keyFrame
 
 
-	local keyBox = Instance.new("TextBox")
-	keyBox.Size = UDim2.new(.75,0,0,40)
-	keyBox.Position = UDim2.new(.125,0,0,90)
-	keyBox.PlaceholderText = "Enter Key"
-	keyBox.Text = ""
-	keyBox.BackgroundColor3 = Color3.fromRGB(60,60,65)
-	keyBox.TextColor3 = Color3.new(1,1,1)
-	keyBox.Parent = keyFrame
+    local keyBox = Instance.new("TextBox")
+    keyBox.Size = UDim2.new(.75,0,0,40)
+    keyBox.Position = UDim2.new(.125,0,0,90)
+    keyBox.PlaceholderText = "Enter Key"
+    keyBox.Text = ""
+    keyBox.BackgroundColor3 = Color3.fromRGB(60,60,65)
+    keyBox.TextColor3 = Color3.new(1,1,1)
+    keyBox.Parent = keyFrame
 
 
-	local boxCorner = Instance.new("UICorner")
-	boxCorner.CornerRadius = UDim.new(0,8)
-	boxCorner.Parent = keyBox
+    local boxCorner = Instance.new("UICorner")
+    boxCorner.CornerRadius = UDim.new(0,8)
+    boxCorner.Parent = keyBox
 
 
-	-- Purple outline around input box ONLY
-	local boxOutline = Instance.new("UIStroke")
-	boxOutline.Color = Color3.fromRGB(170,0,255)
-	boxOutline.Thickness = 3
-	boxOutline.Parent = keyBox
+    -- Purple outline around input box ONLY
+    local boxOutline = Instance.new("UIStroke")
+    boxOutline.Color = Color3.fromRGB(170,0,255)
+    boxOutline.Thickness = 3
+    boxOutline.Parent = keyBox
 
 
-	local enter = Instance.new("TextButton")
-	enter.Size = UDim2.new(.75,0,0,40)
-	enter.Position = UDim2.new(.125,0,0,145)
-	enter.Text = "Enter Key"
-	enter.BackgroundColor3 = Color3.fromRGB(60,60,65)
-enter.TextColor3 = Color3.fromRGB(170,0,255)	enter.Parent = keyFrame
+    local enter = Instance.new("TextButton")
+    enter.Size = UDim2.new(.75,0,0,40)
+    enter.Position = UDim2.new(.125,0,0,145)
+    enter.Text = "Enter Key"
+    enter.BackgroundColor3 = Color3.fromRGB(60,60,65)
+enter.TextColor3 = Color3.fromRGB(170,0,255)    enter.Parent = keyFrame
 
 
-	local discord = Instance.new("TextButton")
-	discord.Size = UDim2.new(.75,0,0,30)
-	discord.Position = UDim2.new(.125,0,0,195)
-	discord.Text = "Join Discord for Key"
-	discord.BackgroundTransparency = 1
-	discord.TextColor3 = Color3.fromRGB(170,0,255)
-	discord.Parent = keyFrame
+    local discord = Instance.new("TextButton")
+    discord.Size = UDim2.new(.75,0,0,30)
+    discord.Position = UDim2.new(.125,0,0,195)
+    discord.Text = "Join Discord for Key"
+    discord.BackgroundTransparency = 1
+    discord.TextColor3 = Color3.fromRGB(170,0,255)
+    discord.Parent = keyFrame
 
 
-	discord.MouseButton1Click:Connect(function()
-		if setclipboard then
-			setclipboard("https://discord.gg/RUTDYKTxNy")
-		end
-	end)
+    discord.MouseButton1Click:Connect(function()
+        if setclipboard then
+            setclipboard("https://discord.gg/RUTDYKTxNy")
+        end
+    end)
 
 
-	enter.MouseButton1Click:Connect(function()
+    enter.MouseButton1Click:Connect(function()
 
-	if keyBox.Text == "6767" then
+    if keyBox.Text == "6767" then
 
-		keyGui:Destroy()
+        keyGui:Destroy()
 
-		local character = player.Character or player.CharacterAdded:Wait()
-		createTool(character)
+        local character = player.Character or player.CharacterAdded:Wait()
+        createTool(character)
 
-	else
+    else
 
-		keyBox.Text = ""
-		keyBox.PlaceholderText = "Wrong Key"
+        keyBox.Text = ""
+        keyBox.PlaceholderText = "Wrong Key"
 
-	end
+    end
 
 end)
 
@@ -750,10 +974,10 @@ createKeyGui()
 
 player.CharacterAdded:Connect(function(character)
 
-	task.wait(1)
+    task.wait(1)
 
-	if PlayerGui:FindFirstChild("HyperMintKeySystem") == nil then
-		createKeyGui()
-	end
+    if PlayerGui:FindFirstChild("HyperMintKeySystem") == nil then
+        createKeyGui()
+    end
 
 end)
